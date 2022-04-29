@@ -1,0 +1,193 @@
+* {
+	margin: 0;
+	text-size-adjust: none;
+}
+/*링크*/
+a{
+	color:black;
+	text-decoration: none;
+}
+/*첫번째 제목*/
+h1{
+	font-size:45px;
+	text-align:center;
+	margin:0px;
+	padding:10px;
+}
+/*순서 정렬*/
+ol{
+	margin:0px;
+	width:auto;
+	height: auto;
+	padding-left:auto;
+	padding-top:auto;
+	padding-bottom: 10px;
+}
+/*하단란*/
+.footer{
+	padding: 100px;
+	position: relative;
+}
+#article {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	width: auto;
+}
+.nav{
+	/* background:red; */
+}
+.list{
+	/* padding-bottom:10px; */
+	/* background:green; */
+}
+.nav_header{
+	/* background:blue; */
+}
+/*컴퓨터 해상도*/
+@media(min-width: 1000px){
+	#grid{
+		display:grid;
+		grid-template-columns: 150px 1fr;
+	
+	}
+	.nav{
+		background-color: lightgray;
+		width: 120%;
+		border-right:1px solid black;
+	}
+	.nav_header{
+		padding:8%;
+	}
+	#article{
+		padding-top: 30px;
+		padding-bottom: 30px;
+		padding-left: 90px;
+		padding-right: 70px;
+	}
+	h1{
+		border-bottom:1px solid black;
+	}
+	.button{
+		/* padding: 20px;
+		margin-left: 50px;
+		font-size: 15px;
+		position: absolute;
+		top: 25%;
+		left: 0%; */
+	}
+	.footer{
+		border-top: 1px solid black;
+		background-color: gray;
+	}
+	p{
+		font-size:20px;
+	}
+	img{
+		display: block;
+		border: 2px solid gray;
+		width:20%;
+		padding: 5px;
+		margin: 0 auto;
+		margin-top: 45px;
+	}
+	.title{
+		padding: 30px;
+		width: 635px;
+		font-size: 20px;
+	}
+	.description{
+		font-size: 18px;
+		width: 500px;
+		padding-top: 30px;
+		padding-left: 35px;
+		padding-bottom: 300px;
+		padding-right: 160px;
+	}
+	#darkmode{
+		display: none;
+	}
+	.nav_btn{
+		margin: 0;
+	}
+}
+/*모바일 해상도*/
+@media(max-width: 1000px){
+	#grid{
+		display:block;
+		padding: 20px;
+		margin:0px;
+	}
+	.nav{
+		/* background-color: gray; */
+	}
+	.nav_header{
+		padding:10px;
+		display: block;
+		font-size: 50px;
+		background-color: gray;
+	}
+	.nav_btns{
+		/* width: 520px;
+		height: 100px; */
+		margin: auto;
+		/* background-color: blue; */
+	}
+	.nav_btn{
+		padding: 20px;
+		margin: auto;
+		font-size: 50px;	
+	}
+	ol{
+		font-size: 50px;
+		padding-top: 20px;
+		padding-left: 100px;
+	}
+	.list{
+		font-size: 50px;
+		margin: 0px;
+		height: auto;
+	}
+	#article{
+		font-size:45px;
+		border: 1px solid gray;
+		width: auto;
+		margin: 30px;
+		padding: 50px;
+	}
+	h1{
+		border-bottom:none;
+		font-size: 90px;
+		text-align: center;
+	}
+	h2{
+		font-size: 50px;
+	}
+	.button{
+		font-size: 50px;
+		padding: 30px;
+	}
+	.footer{
+		padding: auto;
+		width: auto;
+		margin: auto;
+		border-top: none;
+		background-color: gray;
+	}
+	p{
+		font-size:45px;
+	}
+	img{
+		width:100%;
+	}
+	.title{
+		padding: 30px;
+		width: 720px;
+		font-size: 50px;
+	}
+	.description{
+		padding: 30px;
+		width: 720px;
+		padding-bottom: 300px;
+		font-size: 50px;
+	}
+}
