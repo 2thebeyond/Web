@@ -10,6 +10,7 @@ require('lib/print.php');
 		?>
 	</title>
 	<meta charsett="utf-8"/>
+	<link rel="shortcut icon" href="#"/>
 	<link rel="stylesheet" href="style.css"/>
 	<script src="colors.js"></script>
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
