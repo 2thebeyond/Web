@@ -12,6 +12,7 @@ require('lib/print.php');
 	<meta charsett="utf-8"/>
 	<link rel="stylesheet" href="style.css"/>
 	<script src="colors.js"></script>
+	<script src="characters.js"></script>
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
@@ -32,7 +33,7 @@ require('lib/print.php');
 		<div id="article">
 			<form action="create_process.php" method="post">
 				<p>
-					<input class="title" type="text" name="title" placeholder="제목">
+					<input class="title" type="text" name="title" placeholder="제목" onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" onchange="characterCheck(this)" maxlength="30" >
 				</p>
 				<p>
 					<textarea class="description" name="description" placeholder="내용"></textarea>
