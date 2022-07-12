@@ -1,0 +1,94 @@
+.input_section{
+	padding:20px;
+	margin:20px;
+	display: block;
+	font-size: 50px;
+	background-color: gray;
+}
+.center{
+	width:300px;
+	height:550px;
+	margin: auto;
+}
+.title{
+	font-size:30px;
+	display:block;
+	width:250px;
+	margin:auto;
+}
+.input_part{
+	margin: auto;
+	display:block;
+	font-size:20px;
+}
+.label{
+	display:block;
+}
+.input_box{
+	display:block;
+	width:300px;
+	height:30px;
+	margin:auto;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.submit_btn{
+	margin: auto;
+	display: block;
+	margin-top: 50px;
+}
+.error{
+	text-align: center;
+	background: red;
+	color: black;
+	opacity: 30%;
+}
+
+/*컴퓨터 해상도*/
+@media(min-width: 1000px){
+	.text{
+		width: 250px;
+		font-size: 15px;
+		display: block;
+		margin: auto;
+		margin-top: 50px;
+	}
+	.center{
+		height:700px;
+		margin-top: 100px;
+	}
+	.error{
+		font-size: 15px;
+	}
+}
+/*모바일 해상도*/
+@media(max-width: 1000px){
+	.input_part{
+		font-size:45px;
+	}
+	.center{
+		width:400px;
+		height:1500px;
+		margin-top: 200px;
+	}
+	.input_box{
+		width:400px;
+		height:60px;
+		margin-top:30px;
+		margin-bottom:30px;
+		font-size: 45px;
+	}
+	.submit_btn{
+		width:200px;
+		height:70px;
+		font-size:40px;
+	}
+	.text{
+		margin-top: 100px;
+		font-size: 45px;
+		display: block;
+	}
+	.error{
+		font-size: 25px;
+	}
+}
