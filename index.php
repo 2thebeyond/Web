@@ -91,7 +91,10 @@ if(isset($_GET['id'])){
 				//print_list();
 				$j = 0;
 				while ($j < count($arr)){
-					echo "<li onclick=window.open(\"index.php?id={$arr2[$j]}\")>{$arr[$j]}</li>";
+					// 현재창 열기
+					echo "<li onclick=location.href='index.php?id={$arr2[$j]}'>{$arr[$j]}</li>";
+					// 새로운창 열기
+					// echo "<li onclick=window.open(\"index.php?id={$arr2[$j]}\")>{$arr[$j]}</li>";
 					$j++;
 				}
  				//echo $list;
