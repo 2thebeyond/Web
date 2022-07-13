@@ -43,6 +43,12 @@
 	color: black;
 	opacity: 30%;
 }
+.success{
+	text-align: center;
+	background: green;
+	color: black;
+	opacity: 30%;
+}
 
 /*컴퓨터 해상도*/
 @media(min-width: 1000px){
@@ -58,6 +64,9 @@
 		margin-top: 100px;
 	}
 	.error{
+		font-size: 15px;
+	}
+	.success{
 		font-size: 15px;
 	}
 }
@@ -89,6 +98,9 @@
 		display: block;
 	}
 	.error{
+		font-size: 25px;
+	}
+	.success{
 		font-size: 25px;
 	}
 }
