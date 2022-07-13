@@ -126,16 +126,22 @@ ol{
 		font-size: 50px;
 		background-color: gray;
 	}
-	.nav_btns{
-		/* width: 520px;
-		height: 100px; */
+	/* .nav_btns{
+		width: 520px;
+		height: 100px;
 		margin: auto;
-		/* background-color: blue; */
-	}
+		background-color: blue;
+	} */
 	.nav_btn{
 		padding: 20px;
 		margin: auto;
 		font-size: 50px;	
+	}
+	.nav_account_btns {
+		margin: auto;
+	}
+	.nav_post_btns {
+		margin: auto;
 	}
 	ol{
 		font-size: 50px;
