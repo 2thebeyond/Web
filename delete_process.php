@@ -26,7 +26,7 @@ if ($result === false){
 	echo ("<script> alert('저장하는 과정에서 문제가 생겼습니다. 관리자에게 문의해주세요.'); </script>");
 	//error_log(mysqli_error($conn));
 } else {
-	header('Location: /index.php');
+	header('Location: index.php');
 }
 echo $sql;
 
