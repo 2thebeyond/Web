@@ -70,7 +70,7 @@ if(isset($_GET['id'])){
 			<div class="nav_header">
 				<div class="nav_account_btns" style="width: 460px;"> 
 					<button class="nav_btn" type="button" onclick="location.href='register_view.php'">회원가입</button>
-					<button class="nav_btn" type="button" onclick="location.href='register_view.php'">로그인</button>
+					<button class="nav_btn" type="button" onclick="location.href='login_view.php'">로그인</button>
 				</div>
 				<div class="nav_post_btns" style="width: 
 											 <?php if(isset($_GET['id'])) { ?> 520px; <?php } else { ?>

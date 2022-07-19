@@ -1,3 +1,9 @@
+html{height: 100%; }
+
+a{
+	color:black;
+	text-decoration: none;
+}
 .input_section{
 	padding:20px;
 	margin:20px;
@@ -6,23 +12,33 @@
 	background-color: gray;
 }
 .center{
-	width:300px;
-	height:550px;
 	margin: auto;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.form_login, .form_register{
+	position: absolute;
+	margin:-150px 0 0 -150px;
 }
 .title{
 	font-size:30px;
-	display:block;
-	width:250px;
+	/* display:block; */
+	/* width:250px; */
 	margin:auto;
 }
 .input_part{
-	margin: auto;
-	display:block;
+	/* margin: auto; */
+	/* display:block; */
+	font-size:20px;
+}
+.label_link{
+	/* margin: auto;
+	display:block; */
 	font-size:20px;
 }
 .label{
-	display:block;
+	/* display:block; */
 }
 .input_box{
 	display:block;
@@ -38,15 +54,17 @@
 	margin-top: 50px;
 }
 .error{
-	text-align: center;
 	background: red;
 	color: black;
-	opacity: 30%;
 }
 .success{
-	text-align: center;
 	background: green;
 	color: black;
+}
+.text, h1, .error, .success{
+	text-align: center;
+}
+.error, .success{
 	opacity: 30%;
 }
 
@@ -59,14 +77,18 @@
 		margin: auto;
 		margin-top: 50px;
 	}
-	.center{
-		height:700px;
-		margin-top: 100px;
+	.input_section{
+		height:900px;
 	}
-	.error{
-		font-size: 15px;
+	.form_login{
+		top: 40%;
+		left: 50%;
 	}
-	.success{
+	.form_register{
+		top: 30%;
+		left: 50%;
+	}
+	.error, .success{
 		font-size: 15px;
 	}
 }
@@ -75,10 +97,16 @@
 	.input_part{
 		font-size:45px;
 	}
-	.center{
-		width:400px;
-		height:1500px;
-		margin-top: 200px;
+	.input_section{
+		height: 1700px;
+	}
+	.form_login{
+		top: 35%;
+		left: 45%;
+	}
+	.form_register{
+		top: 25%;
+		left: 45%;
 	}
 	.input_box{
 		width:400px;
@@ -97,10 +125,7 @@
 		font-size: 45px;
 		display: block;
 	}
-	.error{
-		font-size: 25px;
-	}
-	.success{
-		font-size: 25px;
+	.error, .success, .text{
+		font-size: 30px;
 	}
 }
