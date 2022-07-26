@@ -1,12 +1,16 @@
 <?php 
+session_start();
 require('lib/print.php');
-$conn = mysqli_connect(
-	'localhost',
-	'root',
-	'test',
-	'opentutorials');
-$sql = "SELECT * FROM topic";
+$conn = mysqli_connect('localhost','root','test','level1');
 mysqli_set_charset($conn, "utf8");
+// $conn = mysqli_connect(
+// 	'localhost',
+// 	'root',
+// 	'test',
+// 	'opentutorials');
+//$sql = "SELECT * FROM topic";
+$sql = "SELECT * FROM forum";
+//mysqli_set_charset($conn, "utf8");
 $result = mysqli_query($conn, $sql);
 $list = '';
 $arr = array();
@@ -37,14 +41,14 @@ while($row = mysqli_fetch_array($result)){
 // }
 //print_r($article);
 
-$sql = "SELECT * FROM author";
-$result = mysqli_query($conn, $sql);
-$select_form = '<select>';
-while($row = mysqli_fetch_array($result)){
-	$select_form .= '<option>'.$row['name'].'</option>';
-}
-$select_form = $select_form.'</select>';
-?>
+// $sql = "SELECT * FROM author";
+// $result = mysqli_query($conn, $sql);
+// $select_form = '<select>';
+// while($row = mysqli_fetch_array($result)){
+// 	$select_form .= '<option>'.$row['name'].'</option>';
+// }
+// $select_form = $select_form.'</select>';
+// ?>
 <!doctype html>
 <html>
 <head>
@@ -82,7 +86,8 @@ $select_form = $select_form.'</select>';
 		<div id="article">
 			<form action="create_process.php" method="post">
 				<p>
-					<?=$select_form?>
+					<?php if(isset($_SESSION['user_nick'])) { echo $_SESSION['user_nick']; } ?>
+					<?php//$select_form?>
 				</p>
 				<p>
 					<input class="title" type="text" name="title" placeholder="제목" onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" onchange="characterCheck(this)" maxlength="30" >

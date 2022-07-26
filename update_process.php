@@ -1,9 +1,6 @@
 <?php
-$conn = mysqli_connect(
-	'localhost', 
-	'root', 
-	'test', 
-	'opentutorials');
+$conn = mysqli_connect('localhost','root','test','level1');
+mysqli_set_charset($conn, "utf8");
 
 settype($_POST['id'], 'integer');
 $filtered = array(
@@ -14,7 +11,7 @@ $filtered = array(
 print_r($filtered);
 
 $sql = "
-	UPDATE topic
+	UPDATE forum
 		SET
 			title = '{$filtered['title']}',
 			description = '{$filtered['description']}'
@@ -31,11 +28,11 @@ $result = mysqli_query($conn, $sql);
 
 if ($result === false){
 	echo ("<script> alert('저장하는 과정에서 문제가 생겼습니다. 관리자에게 문의해주세요. </script>");
-	//error_log(mysqli_error($conn));
+	error_log(mysqli_error($conn));
 } else {
 	header('Location: index.php?id='.$filtered['id']);
 }
-echo $sql;
+//echo $sql;
 
 // rename('data/'.$_POST['old_title'], 'data/'.$_POST['title']);
 // file_put_contents('data/'.$_POST['title'], $_POST['description']);

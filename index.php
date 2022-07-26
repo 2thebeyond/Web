@@ -1,11 +1,14 @@
 <?php 
+session_start();
 require('lib/print.php');
-$conn = mysqli_connect(
-	'localhost',
-	'root',
-	'test',
-	'opentutorials');
-$sql = "SELECT * FROM topic";
+$conn = mysqli_connect('localhost','root','test','level1');
+// $conn = mysqli_connect(
+// 	'localhost',
+// 	'root',
+// 	'test',
+// 	'opentutorials');
+//$sql = "SELECT * FROM topic";
+$sql = "SELECT * FROM forum";
 mysqli_set_charset($conn, "utf8");
 $result = mysqli_query($conn, $sql);
 
@@ -32,17 +35,20 @@ $article = array(
 $title = 'Welcome :)';
 if(isset($_GET['id'])){
 	$filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
-	$sql = "SELECT * FROM topic LEFT JOIN author ON topic.author_id = author.id WHERE topic.id = {$filtered_id}";
+	// $sql = "SELECT * FROM topic LEFT JOIN author ON topic.author_id = author.id WHERE topic.id = {$filtered_id}";
+	$sql = "SELECT * FROM forum LEFT JOIN member ON forum.author_id = member.id WHERE forum.id = {$filtered_id}";
 	$result = mysqli_query($conn, $sql);
 	echo mysqli_error($conn);
 	$row = mysqli_fetch_array($result);
 	$article['title'] = htmlspecialchars($row['title']);
 	$article['description'] = htmlspecialchars($row['description']);
-	$article['name'] = htmlspecialchars($row['name']);
-	if (empty($article['name'])){
+	$article['nick'] = htmlspecialchars($row['user_nick']);
+	$article['author_id'] = htmlspecialchars($row['author_id']);
+	if (empty($article['nick'])){
 		$author = "<p>unknown</p>";
+		
 	} else {
-		$author = "<p>{$article['name']}</p>";
+		$author = "<p>{$article['nick']}</p>";
 	}
 }
 //print_r($article);

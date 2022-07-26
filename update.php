@@ -1,11 +1,14 @@
 <?php 
+session_start();
 require('lib/print.php');
-$conn = mysqli_connect(
-	'localhost',
-	'root',
-	'test',
-	'opentutorials');
-$sql = "SELECT * FROM topic";
+$conn = mysqli_connect('localhost','root','test','level1');
+// $conn = mysqli_connect(
+// 	'localhost',
+// 	'root',
+// 	'test',
+// 	'opentutorials');
+//$sql = "SELECT * FROM topic";
+$sql = "SELECT * FROM forum";
 mysqli_set_charset($conn, "utf8");
 $result = mysqli_query($conn, $sql);
 $list = '';
@@ -33,7 +36,8 @@ $article = array(
 $title = 'Welcome :)';
 if(isset($_GET['id'])){
 	$filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
-	$sql = "SELECT * FROM topic WHERE id = {$filtered_id}";
+	//$sql = "SELECT * FROM topic WHERE id = {$filtered_id}";
+	$sql = "SELECT * FROM forum WHERE id = {$filtered_id}";
 	$result = mysqli_query($conn, $sql);
 	$row = mysqli_fetch_array($result);
 	$article['title'] = htmlspecialchars($row['title']);
@@ -77,6 +81,9 @@ if(isset($_GET['id'])){
 		</div>
 		<div id="article">
 			<form action="update_process.php" method="post">
+				<p>
+					<?=$_SESSION['user_nick'];?>
+				</p>
 				<p>
 					<input type="hidden" name="id" value="<?=$_GET['id']?>">
 					<input class="title" type="text" name="title" placeholder="제목" onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" onchange="characterCheck(this)" maxlength="30" value="<?=$article['title']?>">

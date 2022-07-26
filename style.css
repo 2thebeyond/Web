@@ -33,15 +33,9 @@ ol{
 	padding-bottom: 30px;
 	width: auto;
 }
-.nav{
-	/* background:red; */
-}
 .list{
 	/* padding-bottom:10px; */
 	/* background:green; */
-}
-.nav_header{
-	/* background:blue; */
 }
 /*컴퓨터 해상도*/
 @media(min-width: 1000px){
@@ -123,7 +117,7 @@ ol{
 	.nav_header{
 		padding:10px;
 		display: block;
-		font-size: 50px;
+		/* font-size: 50px; */
 		background-color: gray;
 	}
 	/* .nav_btns{
