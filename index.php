@@ -74,22 +74,30 @@ if(isset($_GET['id'])){
 	<div id="grid">
 		<div class="nav">
 			<div class="nav_header">
-				<div class="nav_account_btns" style="width: 460px;"> 
+				<div class="nav_account_btns" style="width: 
+				<?php if(isset($_SESSION['id'])) { ?> 250px; <?php  } else { ?> 460px; <?php } ?> ">
+				<?php if(isset($_SESSION['id'])) { ?>
+					<button class="nav_btn" type="button" onclick="location.href='mypage/logout.php'">로그아웃</button>
+				<?php  } else { ?>
 					<button class="nav_btn" type="button" onclick="location.href='register_view.php'">회원가입</button>
 					<button class="nav_btn" type="button" onclick="location.href='login_view.php'">로그인</button>
+				<?php } ?>
 				</div>
 				<div class="nav_post_btns" style="width: 
-											 <?php if(isset($_GET['id'])) { ?> 520px; <?php } else { ?>
+											 <?php if($_SESSION['id'] == $article['author_id']) { ?> 520px; <?php } else { ?>
 											 195px; <?php } ?> "> 
-					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button>
+				<?php if(isset($_SESSION['id'])) {  ?>
+					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button> 
+				<?php } ?>
 				<?php if(isset($_GET['id'])) { ?>
+				<?php if($_SESSION['id'] == $article['author_id']) { ?>	
 					<button class="nav_btn" type="button" onclick="location.href='update.php?id=<?=htmlspecialchars($_GET['id'])?>'">수정</button>
 					<button class="nav_btn" type="submit" form="delete" style="color:red;">삭제</button>
 						<form id="delete" action="delete_process.php" method="post">
 							<!-- <input type="hidden" name="id" value="htmlspecialchars($_GET['id'])?>"> -->
 							<input type="hidden" name="id" value="<?=$_GET['id']?>">
 						</form>
-				<?php } ?>
+				<?php }	} ?>
 				</div>
 			</div>
 			<ol class="list">
