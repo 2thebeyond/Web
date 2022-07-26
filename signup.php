@@ -1,7 +1,9 @@
 <?php
+session_start();
 $db = mysqli_connect('localhost','root','test','level1');
 mysqli_set_charset($db, "utf8");
 
+// register server
 if (isset($_POST['user_id']) && isset($_POST['user_nick']) && isset($_POST['password1']) && isset($_POST['password2']))
 {
 	$uid = mysqli_real_escape_string($db, $_POST['user_id']);
@@ -53,7 +55,7 @@ if (isset($_POST['user_id']) && isset($_POST['user_nick']) && isset($_POST['pass
 		}
 	}
 } 
-
+// login server
 else if (isset($_POST['user_id']) && isset($_POST['password']))
 {
 	$uid = mysqli_real_escape_string($db, $_POST['user_id']);
@@ -74,8 +76,12 @@ else if (isset($_POST['user_id']) && isset($_POST['password']))
 			$hash = $row['password'];
 			
 			if (password_verify($pwd, $hash)){
-				header("location: login_view.php?success=로그인에 성공하였습니다.");
-				//header("location: mypage/mypage.php");
+				$_SESSION['user_id'] = $row['user_id'];
+				$_SESSION['user_nick']= $row['user_nick'];
+				$_SESSION['id'] = $row['id'];
+				
+				//header("location: login_view.php?success=로그인에 성공하였습니다.");
+				header("location: mypage/mypage_view.php");
 				exit();
 			} else {
 				header("location: login_view.php?error=로그인에 실패하였습니다.");
