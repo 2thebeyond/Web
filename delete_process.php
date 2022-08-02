@@ -6,9 +6,9 @@ settype($_POST['id'], 'integer');
 $filtered = array(
 	'id'=>mysqli_real_escape_string($conn, $_POST['id'])
 );
-$id = print_r($filtered);
+// $id = print_r($filtered);
 
-$sql = "SELECT * FROM forum WHERE id = {$id}";
+$sql = "SELECT * FROM forum WHERE id = {$filtered['id']}";
 $result = mysqli_query($conn, $sql);
 // echo mysqli_error($conn);
 $row = mysqli_fetch_array($result);
