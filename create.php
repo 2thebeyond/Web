@@ -108,7 +108,7 @@ while($row = mysqli_fetch_array($result)){
 		</div>
 	</div>
 	<div class="footer">
-		<form action="" method="post">
+		<form action="" method="get">
 			<input id="darkmode" class="button" type="submit" value="Dark Mode" name="darkmode" onclick="ToggleTheme(this);">
 		</form>
 	</div>
