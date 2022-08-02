@@ -10,6 +10,7 @@ if (isset($_POST['user_id']) && isset($_POST['user_nick']) && isset($_POST['pass
 	$unick = mysqli_real_escape_string($db, $_POST['user_nick']);
 	$pwd = mysqli_real_escape_string($db, $_POST['password1']);
 	$pwdCheck = mysqli_real_escape_string($db, $_POST['password2']);
+	$isEmail = var_dump(filter_var($uid, FILTER_VALIDATE_EMAIL));
 	
 	if (empty($uid)){
 		header("location: register_view.php?error=아이디가 비어있어요.");
@@ -35,6 +36,12 @@ if (isset($_POST['user_id']) && isset($_POST['user_nick']) && isset($_POST['pass
 		$id_overlapCheck = mysqli_query($db, $sql_id_overlap);
 		$nick_overlapCheck = mysqli_query($db, $sql_nickName_overlap);
 
+		 if (preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $uid) == false)
+		{
+			 header("location: register_view.php?error=이메일 형식이 잘못되었습니다.");
+			exit();
+		}
+		
 		if (mysqli_num_rows($id_overlapCheck) > 0){
 			header("location: register_view.php?error=중복되는 아이디가 존재합니다.");
 			exit();
