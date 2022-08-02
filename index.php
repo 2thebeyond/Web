@@ -134,7 +134,7 @@ if(isset($_GET['id'])){
 				echo $article['title'];
 				?>
 			</h2>
-			<p style="overflow: auto;">
+			<p style="overflow: auto; white-space:pre-line;">
 				<?php
 				echo $article['description'];
 				?>
