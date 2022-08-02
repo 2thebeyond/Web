@@ -70,18 +70,7 @@ while($row = mysqli_fetch_array($result)){
 					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button>
 				</div>
 			</div>
-			<ol class="list">
-				<?php
-				//print_list();
-				$j = 0;
-				while ($j < count($arr)){
-					// 현재창 열기
-					echo "<li onclick=location.href='index.php?id={$arr2[$j]}'>{$arr[$j]}</li>";
-					$j++;
-				}
- 				//echo $list;
-				?>
-			</ol>
+			<!-- list -->
 		</div>
 		<div id="article">
 			<form action="create_process.php" method="post">
@@ -100,11 +89,27 @@ while($row = mysqli_fetch_array($result)){
 				</p>
 			</form>
 		</div>
+		<div class="list">
+			<table id="list" border="1" style="width: 100%; height:700px;">
+			<?php
+			//print_list();
+			$j = 0;
+			while ($j < count($arr)){
+				// 현재창 열기
+				echo "<tr><td>
+				<ul onclick=location.href='index.php?id={$arr2[$j]}'>{$arr[$j]}</ul></td></tr>"; 
+				// 새로운창 열기
+				// echo "<li onclick=window.open(\"index.php?id={$arr2[$j]}\")>{$arr[$j]}</li>";
+				$j++;
+			}
+			//echo $list;
+			?>
+			</table>
+		</div>
 	</div>
 	<div class="footer">
 		<form action="" method="post">
-			<input id="darkmode" class="button" type="submit" value="Dark Mode" name="darkmode" onclick="
-		ToggleTheme(this);">
+			<input id="darkmode" class="button" type="submit" value="Dark Mode" name="darkmode" onclick="ToggleTheme(this);">
 		</form>
 	</div>
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>

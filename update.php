@@ -66,18 +66,7 @@ if(isset($_GET['id'])){
 					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button>
 				</div>
 			</div>
-			<ol class="list">
-				<?php
-				//print_list();
-				$j = 0;
-				while ($j < count($arr)){
-					// 현재창 열기
-					echo "<li onclick=location.href='index.php?id={$arr2[$j]}'>{$arr[$j]}</li>";
-					$j++;
-				}
- 				//echo $list;
-				?>
-			</ol>
+			<!-- list -->
 		</div>
 		<div id="article">
 			<form action="update_process.php" method="post">
@@ -95,6 +84,23 @@ if(isset($_GET['id'])){
 					<input class="button" type="submit" value="작성 완료">
 				</p>
 			</form>
+		</div>
+		<div class="list">
+			<table id="list" border="1" style="width: 100%; height:700px;">
+			<?php
+			//print_list();
+			$j = 0;
+			while ($j < count($arr)){
+				// 현재창 열기
+				echo "<tr><td>
+				<ul onclick=location.href='index.php?id={$arr2[$j]}'>{$arr[$j]}</ul></td></tr>"; 
+				// 새로운창 열기
+				// echo "<li onclick=window.open(\"index.php?id={$arr2[$j]}\")>{$arr[$j]}</li>";
+				$j++;
+			}
+			//echo $list;
+			?>
+			</table>
 		</div>
 	</div>
 	<div class="footer">
