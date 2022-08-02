@@ -37,10 +37,15 @@ session_start();
 				</div>
 				<?php } else { echo header("location: ../index.php"); }?>
 				<div class="label_link">
-					<a href = "../index.php" class="text">메인 페이지로 돌아가기</a>
+					<div class="text" id="text" onclick="location.href='../index.php';">메인 페이지로 돌아가기</div>
+					
+					<!-- <a href = "../index.php" class="text">메인 페이지로 돌아가기</a> -->
 				</div>
 			</div>
 		</div>
 	</div>	
+	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="https://code.jquery.com/git/jquery-git.slim.js"></script>
+	<script src="../colors.js"></script>
 </body>
 </html>

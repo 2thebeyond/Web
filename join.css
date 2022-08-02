@@ -1,15 +1,17 @@
 html{height: 100%; }
 
 a{
-	color:black;
+	/* color:black; */
 	text-decoration: none;
+}
+body{
+	background-color: gray;
 }
 .input_section{
 	padding:20px;
 	margin:20px;
 	display: block;
 	font-size: 50px;
-	background-color: gray;
 }
 .center{
 	margin: auto;
@@ -65,7 +67,7 @@ a{
 	text-align: center;
 }
 .error, .success{
-	opacity: 30%;
+	opacity: 100%;
 }
 
 /*컴퓨터 해상도*/
