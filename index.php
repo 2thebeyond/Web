@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require('lib/print.php');
 $conn = mysqli_connect('localhost','root','test','level1');
 $sql = "SELECT * FROM forum";
@@ -21,13 +22,13 @@ $query = "SELECT * FROM forum ORDER BY id DESC LIMIT {$index_no}, {$list_num}";
 $query2 = "SELECT * FROM forum ORDER BY id DESC";
 $data = mysqli_query($conn, $query);
 $data2 = mysqli_query($conn, $query2);
-$total_posts2 = mysqli_num_rows($data2);
-$total_posts = mysqli_num_rows($data);
+$total_posts = mysqli_num_rows($data2);
+// $total_posts = mysqli_num_rows($data);
 // $lastpage = (int)ceil((double)$total_posts / 3);
 
 $page_num = 5;
 
-$total_page = ceil($total_posts2 / $list_num);
+$total_page = ceil($total_posts / $list_num);
 $now_block = ceil($vpage / $page_num);
 $s_pageNum = ($now_block - 1) * $page_num + 1;
 if ($s_pageNum <= 0){
@@ -78,15 +79,21 @@ if(isset($_GET['id'])){
 	$article['date'] = htmlspecialchars($row['created']);
 	$article['nick'] = htmlspecialchars($row['user_nick']);
 	$article['author_id'] = htmlspecialchars($row['author_id']);
+	// unset( $_SESSION['curPost_id']);
+	$_SESSION['curPost_id'] = $_GET['id'];
+	// echo $_SESSION['curPost_id'];
 	if (empty($article['nick'])){
 		$author = "<p>unknown</p>";
 		
 	} else {
 		$author = "<p>{$article['nick']}</p>";
 	}
+} else {
+	$_SESSION['curPost_id'] = '0';
+	// unset( $_SESSION['curPost_id']);
+	// echo $_SESSION['curPost_id'];
+	// unset($_SESSION['userName']);
 }
-
-
 //print_r($article);
 
 // $update = '<a href="update.php?id='.$_GET['id'].'">update</a>';
@@ -144,19 +151,27 @@ if(isset($_GET['id'])){
 				<tr>
 					<td rowspan="2"> 
 						<?php
-						$mobile_agent = "/(iPod|iPhone|Android|BlackBerry|SymbianOS|SCH-M\d+|Opera Mini|Windows CE|Nokia|SonyEricsson|webOS|PalmOS)/";
+						if ($_GET['id'] != '0'){
+							$mobile_agent = "/(iPod|iPhone|Android|BlackBerry|SymbianOS|SCH-M\d+|Opera Mini|Windows CE|Nokia|SonyEricsson|webOS|PalmOS)/";
 
-						if(preg_match($mobile_agent, $_SERVER['HTTP_USER_AGENT'])){
-							?> <img src="images/profiles/default/blank_profile_picture.png" style="width:80px; height:80px; padding: 0px; margin: 0px;"/> <?php
-						}else{
-							?> <img src="images/profiles/default/blank_profile_picture.png" style="width:60px; height:60px; padding: 0px; margin: 0px;"/> <?php
+							if(preg_match($mobile_agent, $_SERVER['HTTP_USER_AGENT'])){
+								?> <img src="images/profiles/default/blank_profile_picture.png" style="width:80px; height:80px; padding: 0px; margin: 0px;"/> <?php
+							}else{
+								?> <img src="images/profiles/default/blank_profile_picture.png" style="width:60px; height:60px; padding: 0px; margin: 0px;"/> <?php
+							}
+						} else {
+							//
 						}
 						?>
 					</td>
 				<td style="font-weight:bold; padding-left:20px;">
 					<?php 
 					//print_title();
-					echo $author;
+					if ($_GET['id'] != '0'){
+						echo $author;
+					} else {
+						//
+					}
 					//echo $article['name'];
 					?>
 				</td>
@@ -164,7 +179,11 @@ if(isset($_GET['id'])){
 				<tr>
 					<td style="padding-left:20px;"> 
 						<?php
-						echo $article['date'];
+						if ($_GET['id'] != '0'){
+							echo $article['date'];
+						} else {
+							//
+						}
 						?>
 					</td>
 				</tr>
@@ -173,12 +192,20 @@ if(isset($_GET['id'])){
 			<h2 style="overflow: auto; margin-top: 20px">
 				<?php
 				//print_description();
-				echo $article['title'];
+				if ($_GET['id'] != '0'){
+					echo $article['title'];
+				} else {
+					echo 'Welcome :)';
+				}
 				?>
 			</h2>
 			<p style="overflow: auto; white-space:pre-line;">
 				<?php
-				echo $article['description'];
+				if ($_GET['id'] != '0'){
+					echo $article['description'];
+				} else {
+					echo '홈페이지에 오신 것을 환영합니다.';
+				}
 				?>
 			</p>
 		</div>
@@ -223,19 +250,18 @@ if(isset($_GET['id'])){
 			<?php
 			if($vpage <= 1){
     		?>
-		 	<span onclick="location.href='index.php?vpage=1'">이전</span>
+		 	<span onclick="location.href='index.php?id=<?php echo $_SESSION['curPost_id']?>&vpage=1'">이전</span>
 			<?php } else{ ?>
-			<span onclick="location.href='index.php?vpage=<?php echo ($vpage-1); ?>'">이전</span>
-			<?php };
+			<span onclick="location.href='index.php?id=<?php echo $_SESSION['curPost_id'];?>&vpage=<?php echo ($vpage-1);?>'">이전</span>
+			<?php }; 
 			for ($i = $s_pageNum; $i<=$e_pageNum; $i++){
-				echo "<span class='pageNum' onclick=location.href='index.php?vpage={$i}'>{$i}</span>";
+				echo "<span class='pageNum' onclick=location.href='index.php?id={$_SESSION['curPost_id']}&vpage={$i}'>{$i}</span>";
 			}
-			if($vpage >= $total_page){
-			?>
-			<span onclick="location.href='index.php?vpage=<?php echo $total_page; ?>'">다음</span>
-			<?php } else{ ?>
-			<span onclick="location.href='index.php?vpage=<?php echo ($vpage+1); ?>'">다음</span>
-			<?php };?>
+			if($vpage >= $total_page) { ?>
+			<span onclick="location.href='index.php?id=<?php echo $_SESSION['curPost_id']; ?>&vpage=<?php echo $total_page; ?>'">다음</span>
+			<?php } else { ?>
+			<span onclick="location.href='index.php?id=<?php echo $_SESSION['curPost_id']; ?>&vpage=<?php echo ($vpage+1); ?>'">다음</span>
+			<?php } ?>
 		</div>
 	</div>
 	<div class="footer">
