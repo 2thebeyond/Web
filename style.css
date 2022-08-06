@@ -43,6 +43,43 @@ ol{
 #list{
 	border-collapse: collapse;
 }
+.pagination{
+	padding-bottom: 50px;
+	text-align: center;
+}
+.pageNum{
+	padding: 40px;
+}
+ul{
+	padding: 0;	
+}
+.profile_img{
+	margin: 0px;
+	padding: 0px;
+}
+/* .postList{
+	height: 100px;
+} */
+.title_lable{
+	font-weight: bold;
+	overflow: hidden;
+  	text-overflow: ellipsis;
+ 	white-space: nowrap;
+}
+.desc_label{
+	overflow: hidden;
+  	text-overflow: ellipsis;
+ 	white-space: nowrap;
+	color: #505050;
+	/* table-layout: fixed; */
+}
+.nick_label{
+	color: #505050;
+}
+.list_layout{
+	table-layout: fixed;
+	width: 100%;
+}
 /*컴퓨터 해상도*/
 @media(min-width: 1000px){
 	#grid{
@@ -121,6 +158,13 @@ ol{
 	}
 	.nav_btn{
 		margin: 0;
+	}
+	.profile_img{
+		width: 60px;
+		height: 60px;
+	}
+	.profile_label{
+		padding-right: 20px;
 	}
 }
 /*모바일 해상도*/
@@ -219,5 +263,19 @@ ol{
 		width: 720px;
 		padding-bottom: 300px;
 		font-size: 50px;
+	}
+	.pagination{
+		font-size: 50px;
+		text-align: center;
+	}
+	.profile_img{
+		width: 150px;
+		height: 150px;
+	}
+	.title_lable{
+		font-size: 10%;
+	}
+	.profile_label{
+		padding-right: 120px;
 	}
 }
