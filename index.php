@@ -1,11 +1,10 @@
 <?php 
 session_start();
 require('lib/print.php');
-$conn = mysqli_connect(
-	'localhost',
-	'root',
-	'test',
-	'level1'
+$conn = mysqli_connect('localhost'
+					   ,'root'
+					   ,'test'
+					   ,'level1'
 );
 mysqli_set_charset($conn, "utf8");
 $sql = "SELECT * FROM forum";
@@ -54,12 +53,12 @@ $i = 0;
 while($row = mysqli_fetch_array($data)){
 	$sql = "SELECT * FROM forum LEFT JOIN member ON forum.author_id = member.id WHERE forum.id = {$row['id']}";
 	$result = mysqli_query($conn, $sql);
-	$row_ = mysqli_fetch_array($result);
+	$nick_row = mysqli_fetch_array($result);
 	
-	$nickArr[$i] = htmlspecialchars($row_['user_nick']);
 	$escaped_title = htmlspecialchars($row['title']);
 	$escaped_description = htmlspecialchars($row['description']);
 	
+	$nickArr[$i] = htmlspecialchars($nick_row['user_nick']);
 	$titleArr[$i] = $escaped_title;
 	$descArr[$i] = $escaped_description;
 	$postIdArr[$i] = $row['id'];
@@ -85,6 +84,11 @@ if(isset($_GET['id'])){
 	$article['nick'] = htmlspecialchars($row['user_nick']);
 	$article['author_id'] = htmlspecialchars($row['author_id']);
 	$_SESSION['curPost_id'] = $_GET['id'];
+	if (isset($_GET['vpage'])){
+		$_SESSION['vpage'] = $_GET['vpage'];
+	}  else {
+	
+	}
 	if (empty($article['nick'])){
 		$author = "<p>unknown</p>";
 	} 
@@ -93,6 +97,7 @@ if(isset($_GET['id'])){
 	}
 } else {
 	$_SESSION['curPost_id'] = '0';
+	$_SESSION['vpage'] = 1;
 }
 ?>
 <!doctype html>
@@ -123,7 +128,7 @@ if(isset($_GET['id'])){
 					<?php } ?>
 				</div>
 				<div class="nav_post_btns" style="width: 
-					<?php if(isset($_SESSION['id'])) { ?>
+					<?php if(isset($_SESSION['id']) && isset($article['author_id'])) { ?>
 					<?php if($_SESSION['id'] == $article['author_id']) { ?> 520px; <?php } else { ?> 195px; <?php } } ?> "> 
 					<?php if(isset($_SESSION['id'])) {  ?>
 					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button> 
@@ -177,7 +182,7 @@ if(isset($_GET['id'])){
 			<?php } ?>
 			<h2 style="overflow: auto; margin-top: 20px">
 				<?php
-				if ($_GET['id'] != '0'){
+				if (isset($_GET['id']) && $_GET['id'] != '0'){
 					echo $article['title'];
 				} else {
 					echo 'Welcome :)';
@@ -203,17 +208,17 @@ if(isset($_GET['id'])){
 							<td class='profile_label' rowspan='3' style='width:50px; border:0px;'> 
 								<img class='profile_img' src='images/profiles/default/blank_profile_picture.png'/>
 							</td>
-							<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+							<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$postIdArr[$j]}&vpage={$_SESSION['vpage']}'>
 								{$titleArr[$j]}
 							</td>
 						</tr>
 						<tr>
-							<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+							<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$postIdArr[$j]}&vpage={$_SESSION['vpage']}'>
 							{$descArr[$j]}
 							</td>
 						</tr>
 						<tr>
-							<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+							<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$postIdArr[$j]}&vpage={$_SESSION['vpage']}'>
 								{$nickArr[$j]}
 							</td>
 						</tr>

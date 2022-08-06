@@ -1,9 +1,14 @@
 <?php 
 session_start();
 require('lib/print.php');
-$conn = mysqli_connect('localhost','root','test','level1');
+$conn = mysqli_connect('localhost'
+					   ,'root'
+					   ,'test'
+					   ,'level1'
+);
 mysqli_set_charset($conn, "utf8");
 
+///////////////////////// PAGINATION 
 $list_num = 5;
 $page_num = 5;
 
@@ -15,14 +20,14 @@ if (isset($_GET['vpage'])){
 $v_page = (int)$vpage;
 $index_no = ($v_page - 1) * $list_num;
 
+$postQuery = "SELECT * FROM forum ORDER BY id";
+$total_post = mysqli_query($conn, $postQuery);
+$total_post_result = mysqli_num_rows($total_post);
+
 $query = "SELECT * FROM forum ORDER BY id DESC LIMIT {$index_no}, {$list_num}";
-$query2 = "SELECT * FROM forum ORDER BY id DESC";
-
 $data = mysqli_query($conn, $query);
-$data2 = mysqli_query($conn, $query2);
-$total_posts = mysqli_num_rows($data2);
 
-$total_page = ceil($total_posts / $list_num);
+$total_page = ceil($total_post_result / $list_num);
 $now_block = ceil($vpage / $page_num);
 
 $s_pageNum = ($now_block - 1) * $page_num + 1;
@@ -35,29 +40,30 @@ if($e_pageNum > $total_page){
 	$e_pageNum = $total_page;
 }
 
-$arr = array();
+///////////////////////// POST LIST
+$nickArr = array();
 $descArr = array();
-$arr2 = array();
-$arr3 = array();
+$postIdArr = array();
+$titleArr = array();
 
 $i = 0;
-
 while($row = mysqli_fetch_array($data)){
 	$sql = "SELECT * FROM forum LEFT JOIN member ON forum.author_id = member.id WHERE forum.id = {$row['id']}";
 	$result = mysqli_query($conn, $sql);
-	$row_ = mysqli_fetch_array($result);
+	$nick_row = mysqli_fetch_array($result);
 	
-	$arr3[$i] = htmlspecialchars($row_['user_nick']);
 	$escaped_title = htmlspecialchars($row['title']);
 	$escaped_description = htmlspecialchars($row['description']);
 	
-	$arr[$i] = $escaped_title;
+	$nickArr[$i] = htmlspecialchars($nick_row['user_nick']);
+	$titleArr[$i] = $escaped_title;
 	$descArr[$i] = $escaped_description;
-	$arr2[$i] = $row['id'];
+	$postIdArr[$i] = $row['id'];
 	
 	$i++;
 }
 
+///////////////////////// POST CONTENTS
 if(isset($_GET['id'])){
 	$filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
 	$sql = "SELECT * FROM forum WHERE id = {$filtered_id}";
@@ -109,24 +115,24 @@ if(isset($_GET['id'])){
 		<div class="list">
 			<?php
 			$j = 0;
-			while ($j < count($arr)){
+			while ($j < count($titleArr)){
 				echo "<table class='list_layout' border=1; style='border-left: 0px black solid; border-right: 0px black solid;> 
 						<tr style='border-width: 6px; border-style: solid;'>
 							<td class='profile_label' rowspan='3' style='width:50px; border:0px;'> 
 								<img class='profile_img' src='images/profiles/default/blank_profile_picture.png'/>
 							</td>
-							<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$arr2[$j]}'>
-								{$arr[$j]}
+							<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+								{$titleArr[$j]}
 							</td>
 						</tr>
 						<tr>
-							<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$arr2[$j]}'>
+							<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
 							{$descArr[$j]}
 							</td>
 						</tr>
 						<tr>
-							<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$arr2[$j]}'>
-								{$arr3[$j]}
+							<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+								{$nickArr[$j]}
 							</td>
 						</tr>
 					</table>";

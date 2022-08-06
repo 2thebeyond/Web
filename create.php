@@ -1,10 +1,17 @@
 <?php 
 session_start();
 require('lib/print.php');
-$conn = mysqli_connect('localhost','root','test','level1');
+$conn = mysqli_connect('localhost'
+					   ,'root'
+					   ,'test'
+					   ,'level1'
+);
 mysqli_set_charset($conn, "utf8");
 
+///////////////////////// PAGINATION 
 $list_num = 5;
+$page_num = 5;
+
 if (isset($_GET['vpage'])){
 	$vpage = $_GET['vpage'];
 } else {
@@ -13,69 +20,49 @@ if (isset($_GET['vpage'])){
 $v_page = (int)$vpage;
 $index_no = ($v_page - 1) * $list_num;
 
+$postQuery = "SELECT * FROM forum ORDER BY id";
+$total_post = mysqli_query($conn, $postQuery);
+$total_post_result = mysqli_num_rows($total_post);
+
 $query = "SELECT * FROM forum ORDER BY id DESC LIMIT {$index_no}, {$list_num}";
-$query2 = "SELECT * FROM forum ORDER BY id DESC";
 $data = mysqli_query($conn, $query);
-$data2 = mysqli_query($conn, $query2);
-$total_posts = mysqli_num_rows($data2);
-// $total_posts = mysqli_num_rows($data);
-// $lastpage = (int)ceil((double)$total_posts / 3);
 
-$page_num = 5;
-
-$total_page = ceil($total_posts / $list_num);
+$total_page = ceil($total_post_result / $list_num);
 $now_block = ceil($vpage / $page_num);
+
 $s_pageNum = ($now_block - 1) * $page_num + 1;
 if ($s_pageNum <= 0){
 	$s_pageNum = 1;
 }
+
 $e_pageNum = (int)($now_block * $page_num);
 if($e_pageNum > $total_page){
 	$e_pageNum = $total_page;
 }
 
-$arr = array();
+///////////////////////// POST LIST
+$postIdArr = array();
+$nickArr = array();
+$titleArr = array();
 $descArr = array();
-$arr2 = array();
-$arr3 = array();
+
 $i = 0;
 while($row = mysqli_fetch_array($data)){
 	$sql = "SELECT * FROM forum LEFT JOIN member ON forum.author_id = member.id WHERE forum.id = {$row['id']}";
 	$result = mysqli_query($conn, $sql);
-	$row_ = mysqli_fetch_array($result);
-	$arr3[$i] = htmlspecialchars($row_['user_nick']);
+	$nick_row = mysqli_fetch_array($result);
+	
 	$escaped_title = htmlspecialchars($row['title']);
 	$escaped_description = htmlspecialchars($row['description']);
-	$arr[$i] = $escaped_title;
+	
+	$nick_row[$i] = htmlspecialchars($nick_row['user_nick']);
+	$titleArr[$i] = $escaped_title;
 	$descArr[$i] = $escaped_description;
-	$colored_title_ = "<div style=''>{$escaped_title}</div>";
-	// $list = $list."<li><a href=\"index.php?id={$row['id']}\">{$colored_title}</a></li>";
-	$arr2[$i] = $row['id'];
+	$postIdArr[$i] = $row['id'];
+	
 	$i++;
 }
-// while($row = mysqli_fetch_array($result)){
-// 	$list = $list."<li><a href=\"index.php?id={$row['id']}\">{$row['title']}</a></li>";
-// }
-
-// $title = 'Welcome :)';
-// if(isset($_GET['id'])){
-// 	$filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
-// 	$sql = "SELECT * FROM topic WHERE id = {$filtered_id}";
-// 	$result = mysqli_query($conn, $sql);
-// 	$row = mysqli_fetch_array($result);
-// 	$article['title'] = htmlspecialchars($row['title']);
-// 	$article['description'] = htmlspecialchars($row['description']);
-// }
-//print_r($article);
-
-// $sql = "SELECT * FROM author";
-// $result = mysqli_query($conn, $sql);
-// $select_form = '<select>';
-// while($row = mysqli_fetch_array($result)){
-// 	$select_form .= '<option>'.$row['name'].'</option>';
-// }
-// $select_form = $select_form.'</select>';
-// ?>
+?>
 <!doctype html>
 <html>
 <head>
@@ -97,13 +84,11 @@ while($row = mysqli_fetch_array($data)){
 					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button>
 				</div>
 			</div>
-			<!-- list -->
 		</div>
 		<div id="article">
 			<form action="create_process.php" method="post">
 				<p>
 					<?php if(isset($_SESSION['user_nick'])) { echo $_SESSION['user_nick']; } ?>
-					<?php//$select_form?>
 				</p>
 				<p>
 					<input class="title" type="text" name="title" placeholder="제목" onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" onchange="characterCheck(this)" maxlength="30" >
@@ -117,40 +102,32 @@ while($row = mysqli_fetch_array($data)){
 			</form>
 		</div>
 		<div class="list">
-		<!-- <table id="list" style="width: 100%; "> -->
-		<?php
-		$j = 0;
-		// $k = count($arr) -1;
-		while ($j < count($arr)){
-
-			// 현재창 열기
-			echo "<table class='list_layout' border=1; style='border-left: 0px black solid; border-right: 0px black solid;> 
-					<tr style='border-width: 6px; border-style: solid;'>
-						<td class='profile_label' rowspan='3' style='width:50px; border:0px;'> 
-							<img class='profile_img' src='images/profiles/default/blank_profile_picture.png'/>
-						</td>
-						<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$arr2[$j]}'>
-							{$arr[$j]}
-						</td>
-					</tr>
-					<tr>
-						<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$arr2[$j]}'>
-						{$descArr[$j]}
-						</td>
-					</tr>
-					<tr>
-						<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$arr2[$j]}'>
-							{$arr3[$j]}
-						</td>
-					</tr>
-				</table>";
-			// 새로운창 열기
-			// echo "<li onclick=window.open(\"index.php?id={$arr2[$j]}\")>{$arr[$j]}</li>";
-			$j++;
-			// $k--;
-		}
-		//echo $list;
-		?>
+			<?php
+			$j = 0;
+			while ($j < count($arr)){
+				echo "<table class='list_layout' border=1; style='border-left: 0px black solid; border-right: 0px black solid;> 
+						<tr style='border-width: 6px; border-style: solid;'>
+							<td class='profile_label' rowspan='3' style='width:50px; border:0px;'> 
+								<img class='profile_img' src='images/profiles/default/blank_profile_picture.png'/>
+							</td>
+							<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+								{$titleArr[$j]}
+							</td>
+						</tr>
+						<tr>
+							<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+							{$descArr[$j]}
+							</td>
+						</tr>
+						<tr>
+							<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+								{$nickArr[$j]}
+							</td>
+						</tr>
+					</table>";
+				$j++;
+			}
+			?>
 		</div>
 		<div class="pagination">
 			<?php
