@@ -55,7 +55,7 @@ while($row = mysqli_fetch_array($data)){
 	$escaped_title = htmlspecialchars($row['title']);
 	$escaped_description = htmlspecialchars($row['description']);
 	
-	$nick_row[$i] = htmlspecialchars($nick_row['user_nick']);
+	$nickArr[$i] = htmlspecialchars($nick_row['user_nick']);
 	$titleArr[$i] = $escaped_title;
 	$descArr[$i] = $escaped_description;
 	$postIdArr[$i] = $row['id'];
@@ -104,7 +104,7 @@ while($row = mysqli_fetch_array($data)){
 		<div class="list">
 			<?php
 			$j = 0;
-			while ($j < count($arr)){
+			while ($j < count($titleArr)){
 				echo "<table class='list_layout' border=1; style='border-left: 0px black solid; border-right: 0px black solid;> 
 						<tr style='border-width: 6px; border-style: solid;'>
 							<td class='profile_label' rowspan='3' style='width:50px; border:0px;'> 
