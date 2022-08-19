@@ -1,4 +1,7 @@
 <?php 
+// error_reporting(E_ALL);
+// ini_set('display_errors', '1');
+
 session_start();
 require('lib/print.php');
 $conn = mysqli_connect('localhost'
@@ -111,25 +114,29 @@ if(isset($_GET['id'])){
 	<meta charset="utf-8"/>
 	<link rel="shortcut icon" href="#"/>
 	<link rel="stylesheet" href="style.css"/>
+	<link rel="stylesheet" href="theme-toggle/theme-toggle.css" type="text/css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<h1 class="header" onclick="location.href='index.php';">Web</h1>
 	<div id="grid">
 		<div class="nav">
 			<div class="nav_header">
-				<div class="nav_account_btns" style="width: 
-					<?php if(isset($_SESSION['id'])) { ?> 560px; <?php  } else { ?> 460px; <?php } ?> ">
+				<div class="nav_account_btns"> <!--style="margin:  -->
+					<?php //if(isset($_SESSION['id'])) { ?> <!--560px;--> <?php  //} else { ?> <!--460px;--> <?php //} ?> <!--">-->
 					<?php if(isset($_SESSION['id'])) { ?>
 					<button class="nav_btn" type="button" onclick="location.href='mypage/mypage_view.php'">마이페이지</button>
 					<button class="nav_btn" type="button" onclick="location.href='mypage/logout.php'">로그아웃</button>
 					<?php } else { ?>
 					<button class="nav_btn" type="button" onclick="location.href='register_view.php'">회원가입</button>
 					<button class="nav_btn" type="button" onclick="location.href='login_view.php'">로그인</button>
+					
 					<?php } ?>
 				</div>
-				<div class="nav_post_btns" style="width: 
-					<?php if(isset($_SESSION['id']) && isset($article['author_id'])) { ?>
-					<?php if($_SESSION['id'] == $article['author_id']) { ?> 520px; <?php } else { ?> 195px; <?php } } ?> "> 
+				<div class="nav_post_btns">
+					<?php //if(isset($_SESSION['id']) && isset($article['author_id'])) { ?>
+					<?php //if($_SESSION['id'] == $article['author_id']) { ?> <!--520px;--> <?php //} else { ?> <!--195px;--> <?php //} } ?> <!--">--> 
 					<?php if(isset($_SESSION['id'])) {  ?>
 					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button> 
 					<?php } ?>
@@ -141,6 +148,12 @@ if(isset($_GET['id'])){
 							<input type="hidden" name="id" value="<?=$_GET['id']?>">
 						</form>
 					<?php }	} ?>
+				</div>
+				<div class="theme-container">
+					<div class="toggle">
+						<div class="toggle-btn" onclick="darkmode()">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -191,7 +204,7 @@ if(isset($_GET['id'])){
 			</h2>
 			<p style="overflow: auto; white-space:pre-line;">
 				<?php
-				if ($_GET['id'] != '0'){
+				if (isset($_GET['id']) && $_GET['id'] != '0'){
 					echo $article['description'];
 				} else {
 					echo '홈페이지에 오신 것을 환영합니다.';
@@ -199,36 +212,79 @@ if(isset($_GET['id'])){
 				?>
 			</p>
 		</div>
+		<?php if (isset($_GET['id']) && $_GET['id'] != '0'){ ?>
+		<?php if (isset($_SESSION['id'])) { ?>
+		
+		<div class="comment" style="text-align:center;">
+			<form method="POST" id="comment_form">
+				<div class="form-group">
+					<textarea name="comment_content" id="comment_content" class="form-control" placeholder="댓글" rows="5"></textarea>
+				</div>
+				<div class="form-group">
+					<input type="hidden" name="comment_id" id="comment_id" value="0"/>
+					<input type="submit" name="submit" id="comment_submit_btn" class="btn btn-info" value="댓글" />
+				</div>
+			</form>
+			<span id="comment_message"></span>
+   			<br />
+			<div id="display_comment"></div>
+			<?php } else { ?>
+			<div class="login-request-notice">
+				<p style="width: 60%; display: inline-block;" >
+					로그인 후 댓글 이용 가능합니다.
+				</p>
+				<br/>
+				<div class="text" id="text" onclick="location.href='login_view.php';" style="padding-top: 50px; font-weight: bold">로그인 페이지로 이동</div>
+			</div>
+			<?php } } ?>
+		</div>	
 		<div class="list">
 			<?php
-			$j = 0;
-			while ($j < count($titleArr)){
-				echo "<table class='list_layout' border=1; style='border-left: 0px black solid; border-right: 0px black solid;> 
-						<tr style='border-width: 6px; border-style: solid;'>
-							<td class='profile_label' rowspan='3' style='width:50px; border:0px;'> 
-								<img class='profile_img' src='images/profiles/default/blank_profile_picture.png'/>
-							</td>
-							<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$postIdArr[$j]}&vpage={$_SESSION['vpage']}'>
-								{$titleArr[$j]}
-							</td>
-						</tr>
-						<tr>
-							<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$postIdArr[$j]}&vpage={$_SESSION['vpage']}'>
-							{$descArr[$j]}
-							</td>
-						</tr>
-						<tr>
-							<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$postIdArr[$j]}&vpage={$_SESSION['vpage']}'>
-								{$nickArr[$j]}
-							</td>
-						</tr>
-					</table>";
-				$j++;
+			if (empty($_GET['id']) || $_GET['id'] == 0) {
+				$j = 0;
+				while ($j < count($titleArr)){
+					echo "<table class='list_layout' border=1; style='border-left: 0px black solid; border-right: 0px black solid;> 
+							<tr class='list_layout2' style='border-width: 6px; border-style: solid;'>
+								<td class='profile_label' rowspan='3' style='width:50px; border:0px;'> 
+									<img class='profile_img' src='images/profiles/default/blank_profile_picture.png'/>
+								</td>
+								<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$postIdArr[$j]}&vpage={$_SESSION['vpage']}'>
+									{$titleArr[$j]}
+								</td>
+							</tr>
+							<tr>
+								<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$postIdArr[$j]}&vpage={$_SESSION['vpage']}'>
+								{$descArr[$j]}
+								</td>
+							</tr>
+							<tr>
+								<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$postIdArr[$j]}&vpage={$_SESSION['vpage']}'>
+									{$nickArr[$j]}
+								</td>
+							</tr>
+						</table>";
+					$j++;
+				}
+
+				$k = 0;
+				if (count($postIdArr) < $list_num){
+					while($k < ($list_num - count($postIdArr))){
+						echo "<table class='list_layout' border=1; style='border-left: 0px black solid; border-right: 0px black solid;> 
+							<tr class='list_layout2' style='border-width: 6px; border-style: solid;'>
+								<td class='blank_post' rowspan='3' style='border:0px;'> 
+								</td>
+							</tr>
+						</table>
+						";
+						$k++;
+					}
+				}
 			}
 			?>
 		</div>
 		<div class="pagination">
 			<?php
+			if (empty($_GET['id']) || $_GET['id'] == 0) {
 			if($vpage <= 1){
     		?>
 			<span onclick="location.href='index.php?id=<?php echo $_SESSION['curPost_id']?>&vpage=1'">이전</span>
@@ -242,7 +298,7 @@ if(isset($_GET['id'])){
 			<span onclick="location.href='index.php?id=<?php echo $_SESSION['curPost_id']; ?>&vpage=<?php echo $total_page; ?>'">다음</span>
 			<?php } else { ?>
 			<span onclick="location.href='index.php?id=<?php echo $_SESSION['curPost_id']; ?>&vpage=<?php echo ($vpage+1); ?>'">다음</span>
-			<?php } ?>
+			<?php } } ?>
 		</div>
 	</div>
 	<div class="footer">
@@ -250,8 +306,90 @@ if(isset($_GET['id'])){
 			<input id="darkmode" class="button" type="submit" value="Dark Mode" name="darkmode" onclick="ToggleTheme(this);">
 		</form>
 	</div>
-	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
-	<script src="https://code.jquery.com/git/jquery-git.slim.js"></script>
-	<script src="colors.js"></script>
 </body>
 </html>
+
+<script>
+$(document).ready(function(){
+	
+	 	$(document).on('click', '.reply', function(){
+		var thisClicked = $(this);
+		var comment_id = $(this).attr("id");
+		$('#comment_name').focus();
+
+		$('.reply_section').html("");
+		thisClicked.closest('.reply-panel-container').find('.reply_section').
+		html('<div class="comment_reply_form">\
+				<textarea type="text" name="comment_content" id="comment_reply_content" class="form-control" placeholder="댓글" rows="5" style="display: inline-block; width: 80%; margin-top: 100px; margin-bottom: 30px; word-wrap:break-word;"/>\
+				<div class="centered" display: block;">\
+			 		<button class="btn btn-info button" id="reply_submit_btn" style="display: inline-block;">댓글</button>\
+			 	</div>\
+			</div>'
+		);
+ 	}); 
+	
+	$(document).on('click', '#reply_submit_btn', function(e) {
+		e.preventDefault();
+		
+		var thisClicked = $(this);
+		
+		var cmt_id = thisClicked.closest('.reply-panel-container').find('.reply').attr("id");
+		var cmt_cnt = thisClicked.closest('.reply-panel-container').find("#comment_reply_content").val();
+		$.ajax({
+   			url:"add_comment.php",
+   			method:"POST",
+			data: {
+				'comment_id': cmt_id,
+				'comment_content': cmt_cnt
+			},
+			dataType:"JSON",
+			success:function(data)
+			{
+				if(data.error != '')
+				{
+					$('#comment_form')[0].reset();
+					$('#comment_message').html(data.error);
+					$('#comment_id').val('0');
+					load_comment();
+				}
+   			}
+  		})
+	});
+	
+	$('#comment_form').on('submit', function(event){
+  		event.preventDefault();
+  		var form_data = $(this).serialize();
+		// console.log(form_data);
+  		$.ajax({
+   			url:"add_comment.php",
+   			method:"POST",
+			data:form_data,
+			dataType:"JSON",
+			success:function(data)
+			{
+				if(data.error != '')
+				{
+					$('#comment_form')[0].reset();
+					$('#comment_message').html(data.error);
+					$('#comment_id').val('0');
+					load_comment();
+				}
+   			}
+  		})
+ 	});
+
+ 	load_comment();
+
+ 	function load_comment()
+ 	{
+		$.ajax({
+			url:"fetch_comment.php",
+			method:"POST",
+			success:function(data)
+			{
+				$('#display_comment').html(data);
+			}
+  		})
+ 	}
+});
+</script>
