@@ -46,6 +46,7 @@ session_start();
 	</div>	
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
 	<script src="https://code.jquery.com/git/jquery-git.slim.js"></script>
-	<script src="../colors.js"></script>
+	<script src="../theme-toggle/colors.js"></script>
 </body>
 </html>
+<script>loadTheme();</script>

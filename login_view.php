@@ -7,6 +7,7 @@ session_start();
 	<meta charset="utf-8">
 	<title>로그인</title>
 	<link rel="stylesheet" type="text/css" href="join.css">
+	<!-- <link rel="stylesheet" href="theme-toggle/theme-toggle.css" type="text/css"/> -->
 </head>	
 <body>
 	<!-- <form action="login_server.php" method="post"> -->
@@ -49,6 +50,7 @@ session_start();
 	</form>
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
 	<script src="https://code.jquery.com/git/jquery-git.slim.js"></script>
-	<script src="colors.js"></script>
+	<script src="theme-toggle/colors.js"></script>
 </body>
 </html>
+<script>loadTheme();</script>

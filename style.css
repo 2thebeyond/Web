@@ -57,13 +57,10 @@ ul{
 	margin: 0px;
 	padding: 0px;
 }
-/* .postList{
-	height: 100px;
-} */
-.title_lable{
+.title_label{
 	font-weight: bold;
+	text-overflow: ellipsis;
 	overflow: hidden;
-  	text-overflow: ellipsis;
  	white-space: nowrap;
 }
 .desc_label{
@@ -75,26 +72,110 @@ ul{
 }
 .nick_label{
 	color: #505050;
+	font-weight: bold;
 }
 .list_layout{
 	table-layout: fixed;
 	width: 100%;
 }
+.blank_post{
+	height: 160px;
+}
+.create-group{
+	padding:0;
+	margin: 0;
+	display:inline-block;
+}
+.login-request-notice{
+	margin: 0;
+	width: 100%;
+	height: auto;
+	text-align: center;
+	vertical-align: middle;
+	background-color: lightgray;
+}
+/* FOOTER */
+.footer{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;  
+	box-sizing: border-box; 
+	background-color: gray;
+	width: 100%;
+}
+.mobile_footer{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;  
+	box-sizing: border-box; 
+	width: 100%;
+	background-color: gray;
+	padding-top: 4%;
+	padding-bottom: 4%;
+	padding-left: 33%;
+}
+/* DARK MODE */
+.dark-mode{
+	background: #000;
+	color: #fff;
+}
+/* .theme-container{
+	top: 140px;
+	right: 173px;
+	position: absolute;
+	height: 50px;
+}
+
+.theme-container .toggle{
+	
+	position: absolute;
+	width: 150px;
+	height: 70px;
+	background: black;
+	border-radius: 30px;
+}
+
+.theme-container .toggle .toggle-btn{
+	top: 10px;
+	left: 10px;
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background: lightgray;
+	border-radius: 50%;
+}
+
+.theme-container .toggle.active{
+	background: cornflowerblue;
+}
+
+.theme-container .toggle.active .toggle-btn{
+	background: yellow;
+	left: 80px;
+} */
+
 /*컴퓨터 해상도*/
 @media(min-width: 1000px){
-	#grid{
-		/* display:grid;
-		grid-template-columns: 150px 1fr; */
+	h2:after{
+		width: auto;
+		margin: 0px;
+		margin-top: 20px;
+		margin-bottom: 0px;
+		border-bottom: 1px solid #bcbcbc;
+	}
+	p{ font-size:20px; }
+	img{
+		width:20%;
+		padding: 5px;
+		margin: 0 auto;
+		margin-top: 45px;
+		display: block;
+		border: 2px solid gray;
 	}
 	.nav{
 		background-color: lightgray;
 		width: 100%;
 		border:1px solid black;
 	}
-	.nav_header{
-		padding:1%;
-		/* text-align:center */
-	}
+	.nav_header{ padding:1%; }
 	#article{
 		padding-top: 30px;
 		padding-bottom: 30px;
@@ -110,36 +191,6 @@ ul{
 		margin-right: 50px;
 		margin-left: 50px;
 	}
-	h2:after{
-		width: auto;
-		border-bottom: 1px solid #bcbcbc;
-		margin: 0px;
-		margin-top: 20px;
-		margin-bottom: 0px;
-	}
-	.button{
-		/* padding: 20px;
-		margin-left: 50px;
-		font-size: 15px;
-		position: absolute;
-		top: 25%;
-		left: 0%; */
-	}
-	.footer{
-		border-top: 1px solid black;
-		background-color: gray;
-	}
-	p{
-		font-size:20px;
-	}
-	img{
-		display: block;
-		border: 2px solid gray;
-		width:20%;
-		padding: 5px;
-		margin: 0 auto;
-		margin-top: 45px;
-	}
 	.title{
 		padding: 30px;
 		width: 635px;
@@ -153,8 +204,18 @@ ul{
 		padding-bottom: 300px;
 		padding-right: 160px;
 	}
-	#darkmode{
-		/* display: none; */
+	.create-group{
+		/* display:block; */
+		margin-top: 20px;
+	}
+	#comment_content{
+		margin-top: 20px;
+		width: 800px;
+		height: 100px;
+		font-size: 20px;
+	}
+	#comment_submit_btn{
+		font-size: 20px;
 	}
 	.nav_btn{
 		margin: 0;
@@ -166,50 +227,68 @@ ul{
 	.profile_label{
 		padding-right: 20px;
 	}
+	.footer{
+		padding-left: 44%;
+		padding-top: 20px;
+		position: absolute;
+		border-top: 1px solid black;
+	}
+	.blank_post{
+		height: 60px;
+	}
+	.login-request-notice{
+		font-size: 23px;
+		margin-top: 50px;
+		padding-top: 50px;
+		padding-bottom: 50px;
+	}
 }
 /*모바일 해상도*/
 @media(max-width: 1000px){
-	/* #grid{
-		display:block;
-		padding: 20px;
-		margin:0px;
-	} */
-	.nav{
-		/* background-color: gray; */
+	h1{
+		border-bottom:none;
+		font-size: 90px;
+		text-align: center;
 	}
-	.nav_header{
-		padding:10px;
-		display: block;
-		/* font-size: 50px; */
-		background-color: gray;
-	}
-	/* .nav_btns{
-		width: 520px;
-		height: 100px;
-		margin: auto;
-		background-color: blue;
-	} */
-	.nav_btn{
-		padding: 10px;
-		margin: auto;
-		font-size: 50px;	
-	}
-	.nav_account_btns {
-		margin: auto;
-	}
-	.nav_post_btns {
-		margin: auto;
+	h2{ font-size: 50px; }
+	h2:after{
+		width: 770px;
+		margin: 20px auto;
+		margin-bottom: 10px;
+		border-bottom: 1px solid #bcbcbc;
 	}
 	ol{
 		font-size: 50px;
 		padding-top: 20px;
 		padding-left: 100px;
 	}
-	.list{
+	p{ font-size:45px; }
+	img{ width:100%; }
+	.button{
 		font-size: 50px;
+		padding: 30px;
+	}
+	.nav_header{
+		padding:10px;
+		display: block;
+		background-color: gray;
+	}
+	.nav_btn{
+		padding: 10px;
+		font-size: 50px;
+		display :inline-block;
+	}
+	.nav_account_btns {
+		text-align: center;
+	}
+	.nav_post_btns {
+		text-align: center;
+	}
+	.list{
 		margin: 0px;
 		height: auto;
 		padding: 30px;
+		font-size: 50px;
 	}
 	#list{
 		padding: 100px;
@@ -222,47 +301,37 @@ ul{
 		margin: 30px;
 		padding: 50px;
 	}
-	h1{
-		border-bottom:none;
-		font-size: 90px;
-		text-align: center;
-	}
-	h2{
-		font-size: 50px;
-	}
-	h2:after{
-		width: 770px;
-		border-bottom: 1px solid #bcbcbc;
-		margin: 20px auto;
-		margin-bottom: 10px;
-	}
-	.button{
-		font-size: 50px;
-		padding: 30px;
-	}
-	.footer{
-		padding: auto;
-		width: auto;
-		margin: auto;
-		border-top: none;
-		background-color: gray;
-	}
-	p{
-		font-size:45px;
-	}
-	img{
-		width:100%;
-	}
 	.title{
-		padding: 30px;
-		width: 720px;
+		width:800px;
+		height: 150px;
 		font-size: 50px;
 	}
 	.description{
-		padding: 30px;
-		width: 720px;
-		padding-bottom: 300px;
+		width: 800px;
 		font-size: 50px;
+		padding-bottom: 300px;
+		display :inline-block;
+	}
+	.create-group{
+		padding:0;
+		margin: 0;
+		margin-top: 50px;
+		display:inline-block;
+	}
+	#comment_content{
+		width: 900px;
+		height: 200px;
+		font-size: 50px;
+	}
+	#comment_submit_btn{
+		width: 200px;
+		height: 100px;
+		font-size: 50px;
+	}
+	.login-request-notice{
+		font-size: 45px;
+		padding-top: 70px;
+		padding-bottom: 70px;
 	}
 	.pagination{
 		font-size: 50px;
@@ -277,5 +346,13 @@ ul{
 	}
 	.profile_label{
 		padding-right: 120px;
+	}
+	.blank_post{
+		height: 160px;
+	}
+	.footer{
+		padding-top: 4%;
+		padding-bottom: 4%;
+		padding-left: 33%;
 	}
 }

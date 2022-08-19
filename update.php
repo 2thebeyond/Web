@@ -86,30 +86,30 @@ if(isset($_GET['id'])){
 	<script src="characters.js"></script>
 </head>
 <body>
-	<h1 class="header"><a href="index.php">WEB</a></h1>
+	<h1 class="header" onclick="location.href='index.php';">Web</h1>
 	<div id="grid">
 		<div class="nav">
 			<div class="nav_header">
-				<div class="nav_post_btns" style="width: 195px;">
-					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button>
+				<div class="nav_post_btns" style="width: 300px;">
+					<button class="nav_btn" type="button" onclick="location.href='index.php'">뒤로가기</button>
 				</div>
 			</div>
 		</div>
-		<div id="article">
+		<div id="article" style="text-align:center;">
 			<form action="update_process.php" method="post">
-				<p>
-					<?=$_SESSION['user_nick'];?>
-				</p>
-				<p>
+				<span class="create-group">
+					<?php if(isset($_SESSION['user_nick'])) { echo '작성자: '; echo $_SESSION['user_nick']; } ?>
+				</span>
+				<span class="create-group">
 					<input type="hidden" name="id" value="<?=$_GET['id']?>">
 					<input class="title" type="text" name="title" placeholder="제목" onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" onchange="characterCheck(this)" maxlength="30" value="<?=$article['title']?>">
-				</p>
-				<p>
+				</span>
+				<span class="create-group">
 					<textarea class="description" name="description" placeholder="내용"><?=$article['description']?></textarea>
-				</p>
-				<p>
-					<input class="button" type="submit" value="작성 완료">
-				</p>
+				</span>
+				<span class="create-group">
+					<input class="button" type="submit" value="등록">
+				</span>
 			</form>
 		</div>
 		<div class="list">
@@ -165,6 +165,7 @@ if(isset($_GET['id'])){
 	</div>
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
 	<script src="https://code.jquery.com/git/jquery-git.slim.js"></script>
-	<script src="colors.js"></script>
+	<script src="theme-toggle/colors.js"></script>
 </body>
 </html>
+<script>loadTheme();</script>

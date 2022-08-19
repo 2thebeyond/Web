@@ -301,11 +301,9 @@ if(isset($_GET['id'])){
 			<?php } } ?>
 		</div>
 	</div>
-	<div class="footer">
-		<form action="" method="get">
-			<input id="darkmode" class="button" type="submit" value="Dark Mode" name="darkmode" onclick="ToggleTheme(this);">
-		</form>
-	</div>
+	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
+	<!-- <script src="https://code.jquery.com/git/jquery-git.slim.js"></script> -->
+	<script src="theme-toggle/colors.js"></script>
 </body>
 </html>
 

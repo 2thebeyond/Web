@@ -69,7 +69,10 @@ body{
 .error, .success{
 	opacity: 100%;
 }
-
+.dark-mode{
+	background: #000;
+	color: #fff;
+}
 /*컴퓨터 해상도*/
 @media(min-width: 1000px){
 	.text{

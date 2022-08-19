@@ -73,32 +73,32 @@ while($row = mysqli_fetch_array($data)){
 	</title>
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" href="style.css"/>
-	<script src="characters.js"></script>
+	<!-- <script src="characters.js"></script> -->
 </head>
 <body>
-	<h1 class="header"><a href="index.php">WEB</a></h1>
+	<h1 class="header" onclick="location.href='index.php';">Web</h1>
 	<div id="grid">
 		<div class="nav">
 			<div class="nav_header">
-				<div class="nav_post_btns" style="width: 195px;">
-					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button>
+				<div class="nav_post_btns" style="width: 300px;">
+					<button class="nav_btn" type="button" onclick="location.href='index.php'">뒤로가기</button>
 				</div>
 			</div>
 		</div>
-		<div id="article">
+		<div id="article" style="text-align:center;">
 			<form action="create_process.php" method="post">
-				<p>
-					<?php if(isset($_SESSION['user_nick'])) { echo $_SESSION['user_nick']; } ?>
-				</p>
-				<p>
-					<input class="title" type="text" name="title" placeholder="제목" onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" onchange="characterCheck(this)" maxlength="30" >
-				</p>
-				<p>
+				<span class="create-group">
+				<?php if(isset($_SESSION['user_nick'])) { echo '작성자: '; echo $_SESSION['user_nick']; } ?>
+				</span>
+				<span class="create-group">
+					<input class="title" type="text" name="title" placeholder="제목" onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" onchange="characterCheck(this)" maxlength="30">
+				</span>
+				<span class="create-group">
 					<textarea class="description" name="description" placeholder="내용"></textarea>
-				</p>
-				<p>
-					<input class="button" type="submit" value="작성 완료">
-				</p>
+				</span>
+				<span class="create-group">
+					<input class="button" type="submit" value="등록">
+				</span>
 			</form>
 		</div>
 		<div class="list">
@@ -154,6 +154,7 @@ while($row = mysqli_fetch_array($data)){
 	</div>
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
 	<script src="https://code.jquery.com/git/jquery-git.slim.js"></script>
-	<script src="colors.js"></script>
+	<script src="theme-toggle/colors.js"></script>
 </body>
 </html>
+<script>loadTheme();</script>
