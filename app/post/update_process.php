@@ -41,12 +41,12 @@ if ($_SESSION['id'] == $author['author_id'])
 	} 
 	else 
 	{
-		header('Location: index.php?id='.$filtered['id']);
+		header('Location: ../../index.php?id='.$filtered['id']);
 	}
 } 
 else 
 {
 	echo ("<script> alert('잘못된 접근입니다.') </script>");
-	header('Refresh: 0; URL=index.php');
+	header('Refresh: 0; URL=../../index.php');
 }
 ?>

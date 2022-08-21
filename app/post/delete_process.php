@@ -24,7 +24,7 @@ if ($_SESSION['id'] == $article['author_id']){
 	if ($result === false){
 		echo ("<script> alert('삭제하는 과정에서 문제가 생겼습니다. 관리자에게 문의해주세요.'); </script>");
 	} else {
-		header('Location: index.php');
+		header('Location: ../../index.php');
 	}
 }  else{
 	echo ("<script> alert('삭제할 수 없는 게시물입니다.'); </script>");

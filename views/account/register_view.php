@@ -6,11 +6,11 @@ session_start();
 <head>
 	<meta charset="utf-8">
 	<title>회원가입</title>
-	<link rel="stylesheet" type="text/css" href="join.css">
+	<link rel="stylesheet" type="text/css" href="../../styles/join.css">
 </head>	
 <body>
 	<!-- <form action="register_server.php" method="post"> -->
-	<form action="signup.php" method="post">
+	<form action="../../app/acct/signup.php" method="post">
 		<div class="input_section">
 			<div class="center">
 				<div class="form_register">
@@ -54,13 +54,16 @@ session_start();
 					<div class="label_link">
 						<div class="text" id="text" onclick="location.href='login_view.php';">이미 회원이신가요? <br> (로그인)</div>
 					</div>
+					<div class="label_link">
+						<div class="text" id="text" onclick="location.href='../../index.php';">메인 페이지로 돌아가기</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</form>
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
-	<script src="https://code.jquery.com/git/jquery-git.slim.js"></script>
-	<script src="theme-toggle/colors.js"></script>
+	<!-- <script src="https://code.jquery.com/git/jquery-git.slim.js"></script> -->
+	<script src="../../scripts/dark-mode.js"></script>
 </body>
 </html>
 <script>loadTheme();</script>

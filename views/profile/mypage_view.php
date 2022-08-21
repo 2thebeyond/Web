@@ -6,7 +6,7 @@ session_start();
 <head>
 	<meta charset="utf-8">
 	<title>마이페이지</title>
-	<link rel="stylesheet" type="text/css" href="mypage.css">
+	<link rel="stylesheet" type="text/css" href="../../styles/mypage.css">
 </head>	
 <body>
 	<div class="mypage_field">
@@ -16,7 +16,6 @@ session_start();
 					<h1>마이페이지</h1>
 				</div>
 				<?php if(isset($_SESSION['id'])) { ?>
-				
 				<div class="message">
 					<p class ="welcome"><?php echo $_SESSION['user_nick'];?> 회원님 환영합니다!</p>
 				</div>
@@ -32,21 +31,19 @@ session_start();
 				</table>
 				<div class="nav_footer">
 					<div class="nav_footer_btns">
-						<button class="logout_btn" onclick="location.href='logout.php'">로그아웃</button>
+						<button class="logout_btn" onclick="location.href='../../applications/profile/logout.php'">로그아웃</button>
 					</div>
 				</div>
-				<?php } else { echo header("location: ../index.php"); }?>
+				<?php } else { echo header("location: ../../index.php"); }?>
 				<div class="label_link">
-					<div class="text" id="text" onclick="location.href='../index.php';">메인 페이지로 돌아가기</div>
-					
-					<!-- <a href = "../index.php" class="text">메인 페이지로 돌아가기</a> -->
+					<div class="text" id="text" onclick="location.href='../../index.php';">메인 페이지로 돌아가기</div>
 				</div>
 			</div>
 		</div>
 	</div>	
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
-	<script src="https://code.jquery.com/git/jquery-git.slim.js"></script>
-	<script src="../theme-toggle/colors.js"></script>
+	<!-- <script src="https://code.jquery.com/git/jquery-git.slim.js"></script> -->
+	<script src="../../scripts/dark-mode.js"></script>
 </body>
 </html>
 <script>loadTheme();</script>

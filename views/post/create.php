@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require('lib/print.php');
+require('../../libraries/print.php');
 $conn = mysqli_connect('localhost'
 					   ,'root'
 					   ,'test'
@@ -72,21 +72,21 @@ while($row = mysqli_fetch_array($data)){
 		?>
 	</title>
 	<meta charset="utf-8"/>
-	<link rel="stylesheet" href="style.css"/>
-	<!-- <script src="characters.js"></script> -->
+	<link rel="stylesheet" href="../../styles/style.css"/>
 </head>
 <body>
-	<h1 class="header" onclick="location.href='index.php';">Web</h1>
+	<h1 class="header" onclick="location.href='../../index.php';">Web</h1>
 	<div id="grid">
 		<div class="nav">
 			<div class="nav_header">
 				<div class="nav_post_btns" style="width: 300px;">
-					<button class="nav_btn" type="button" onclick="location.href='index.php'">뒤로가기</button>
+					<button class="nav_btn" type="button" onclick="location.href='../../index.php'">뒤로가기</button>
 				</div>
+				<?php require('../../libraries/dark-mode.php'); ?> <!-- 다크모드 -->
 			</div>
 		</div>
 		<div id="article" style="text-align:center;">
-			<form action="create_process.php" method="post">
+			<form action="../../app/post/create_process.php" method="post">
 				<span class="create-group">
 				<?php if(isset($_SESSION['user_nick'])) { echo '작성자: '; echo $_SESSION['user_nick']; } ?>
 				</span>
@@ -101,60 +101,58 @@ while($row = mysqli_fetch_array($data)){
 				</span>
 			</form>
 		</div>
-		<div class="list">
+		<!-- <div class="list">
 			<?php
-			$j = 0;
-			while ($j < count($titleArr)){
-				echo "<table class='list_layout' border=1; style='border-left: 0px black solid; border-right: 0px black solid;> 
-						<tr style='border-width: 6px; border-style: solid;'>
-							<td class='profile_label' rowspan='3' style='width:50px; border:0px;'> 
-								<img class='profile_img' src='images/profiles/default/blank_profile_picture.png'/>
-							</td>
-							<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
-								{$titleArr[$j]}
-							</td>
-						</tr>
-						<tr>
-							<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
-							{$descArr[$j]}
-							</td>
-						</tr>
-						<tr>
-							<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
-								{$nickArr[$j]}
-							</td>
-						</tr>
-					</table>";
-				$j++;
-			}
+			// $j = 0;
+			// while ($j < count($titleArr)){
+			// 	echo "<table class='list_layout' border=1; style='border-left: 0px black solid; border-right: 0px black solid;> 
+			// 			<tr style='border-width: 6px; border-style: solid;'>
+			// 				<td class='profile_label' rowspan='3' style='width:50px; border:0px;'> 
+			// 					<img class='profile_img' src='../../images/profiles/default/blank_profile_picture.png'/>
+			// 				</td>
+			// 				<td class='title_label' style='border:0px; font-weight: bold;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+			// 					{$titleArr[$j]}
+			// 				</td>
+			// 			</tr>
+			// 			<tr>
+			// 				<td class='desc_label' style='border:0px; font-size: 80%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+			// 				{$descArr[$j]}
+			// 				</td>
+			// 			</tr>
+			// 			<tr>
+			// 				<td class='nick_label' style='border:0px; font-size: 70%;' onclick=location.href='index.php?id={$postIdArr[$j]}'>
+			// 					{$nickArr[$j]}
+			// 				</td>
+			// 			</tr>
+			// 		</table>";
+			// 	$j++;
+			// }
 			?>
-		</div>
-		<div class="pagination">
+		</div> -->
+		<!-- <div class="pagination">
 			<?php
-			if($vpage <= 1){
+			// if($vpage <= 1){
     		?>
-		 	<span onclick="location.href='create.php?id=<?php echo $_SESSION['curPost_id']?>&vpage=1'">이전</span>
-			<?php } else{ ?>
-			<span onclick="location.href='create.php?id=<?php echo $_SESSION['curPost_id'];?>&vpage=<?php echo ($vpage-1);?>'">이전</span>
-			<?php }; 
-			for ($i = $s_pageNum; $i<=$e_pageNum; $i++){
-				echo "<span class='pageNum' onclick=location.href='create.php?id={$_SESSION['curPost_id']}&vpage={$i}'>{$i}</span>";
-			}
-			if($vpage >= $total_page) { ?>
-			<span onclick="location.href='create.php?id=<?php echo $_SESSION['curPost_id']; ?>&vpage=<?php echo $total_page; ?>'">다음</span>
-			<?php } else { ?>
-			<span onclick="location.href='create.php?id=<?php echo $_SESSION['curPost_id']; ?>&vpage=<?php echo ($vpage+1); ?>'">다음</span>
-			<?php } ?>
-		</div>
+		 	<span onclick="location.href='create.php?id=<?php //echo $_SESSION['curPost_id']; ?>&vpage=1'">이전</span>
+			<?php //} else{ ?>
+			<span onclick="location.href='create.php?id=<?php //echo $_SESSION['curPost_id'];?>&vpage=<?php //echo ($vpage-1);?>'">이전</span>
+			<?php //}; 
+			//for ($i = $s_pageNum; $i<=$e_pageNum; $i++){
+				//echo "<span class='pageNum' onclick=location.href='create.php?id={$_SESSION['curPost_id']}&vpage={$i}'>{$i}</span>";
+			//}
+			//if($vpage >= $total_page) { ?>
+			<span onclick="location.href='create.php?id=<?php //echo $_SESSION['curPost_id']; ?>&vpage=<?php //echo $total_page; ?>'">다음</span>
+			<?php //} else { ?>
+			<span onclick="location.href='create.php?id=<?php //echo $_SESSION['curPost_id']; ?>&vpage=<?php //echo ($vpage+1); ?>'">다음</span>
+			<?php //} ?>
+		</div> -->
 	</div>
-	<div class="footer">
+	<!-- <div class="footer">
 		<form action="" method="get">
 			<input id="darkmode" class="button" type="submit" value="Dark Mode" name="darkmode" onclick="ToggleTheme(this);">
 		</form>
-	</div>
+	</div> -->
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
-	<script src="https://code.jquery.com/git/jquery-git.slim.js"></script>
-	<script src="theme-toggle/colors.js"></script>
+	<!-- <script src="https://code.jquery.com/git/jquery-git.slim.js"></script> -->
 </body>
 </html>
-<script>loadTheme();</script>

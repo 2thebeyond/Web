@@ -86,11 +86,11 @@ body{
 		height:900px;
 	}
 	.form_login{
-		top: 40%;
+		top: 33%;
 		left: 50%;
 	}
 	.form_register{
-		top: 30%;
+		top: 26%;
 		left: 50%;
 	}
 	.error, .success{
@@ -106,11 +106,11 @@ body{
 		height: 1700px;
 	}
 	.form_login{
-		top: 35%;
+		top: 32%;
 		left: 45%;
 	}
 	.form_register{
-		top: 25%;
+		top: 22%;
 		left: 45%;
 	}
 	.input_box{

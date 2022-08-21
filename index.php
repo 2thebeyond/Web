@@ -3,7 +3,7 @@
 // ini_set('display_errors', '1');
 
 session_start();
-require('lib/print.php');
+require('libraries/print.php');
 $conn = mysqli_connect('localhost'
 					   ,'root'
 					   ,'test'
@@ -113,8 +113,7 @@ if(isset($_GET['id'])){
 	</title>
 	<meta charset="utf-8"/>
 	<link rel="shortcut icon" href="#"/>
-	<link rel="stylesheet" href="style.css"/>
-	<link rel="stylesheet" href="theme-toggle/theme-toggle.css" type="text/css"/>
+	<link rel="stylesheet" href="styles/style.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
@@ -123,38 +122,30 @@ if(isset($_GET['id'])){
 	<div id="grid">
 		<div class="nav">
 			<div class="nav_header">
-				<div class="nav_account_btns"> <!--style="margin:  -->
-					<?php //if(isset($_SESSION['id'])) { ?> <!--560px;--> <?php  //} else { ?> <!--460px;--> <?php //} ?> <!--">-->
+				<div class="nav_account_btns">
 					<?php if(isset($_SESSION['id'])) { ?>
-					<button class="nav_btn" type="button" onclick="location.href='mypage/mypage_view.php'">마이페이지</button>
-					<button class="nav_btn" type="button" onclick="location.href='mypage/logout.php'">로그아웃</button>
+					<button class="nav_btn" type="button" onclick="location.href='views/profile/mypage_view.php'">마이페이지</button>
+					<button class="nav_btn" type="button" onclick="location.href='app/acct/logout.php'">로그아웃</button>
 					<?php } else { ?>
-					<button class="nav_btn" type="button" onclick="location.href='register_view.php'">회원가입</button>
-					<button class="nav_btn" type="button" onclick="location.href='login_view.php'">로그인</button>
+					<button class="nav_btn" type="button" onclick="location.href='views/account/register_view.php'">회원가입</button>
+					<button class="nav_btn" type="button" onclick="location.href='views/account/login_view.php'">로그인</button>
 					
 					<?php } ?>
 				</div>
 				<div class="nav_post_btns">
-					<?php //if(isset($_SESSION['id']) && isset($article['author_id'])) { ?>
-					<?php //if($_SESSION['id'] == $article['author_id']) { ?> <!--520px;--> <?php //} else { ?> <!--195px;--> <?php //} } ?> <!--">--> 
 					<?php if(isset($_SESSION['id'])) {  ?>
-					<button class="nav_btn" type="button" onclick="location.href='create.php'">글쓰기</button> 
+					<button class="nav_btn" type="button" onclick="location.href='views/post/create.php'">글쓰기</button> 
 					<?php } ?>
 					<?php if(isset($_GET['id']) && isset($_SESSION['id'])) { ?>
 					<?php if($_SESSION['id'] == $article['author_id']) { ?>	
-					<button class="nav_btn" type="button" onclick="location.href='update.php?id=<?=htmlspecialchars($_GET['id'])?>'">수정</button>
+					<button class="nav_btn" type="button" onclick="location.href='views/post/update.php?id=<?=htmlspecialchars($_GET['id'])?>'">수정</button>
 					<button class="nav_btn" type="submit" form="delete" style="color:red;">삭제</button>
-						<form id="delete" action="delete_process.php" method="post">
+						<form id="delete" action="app/post/delete_process.php" method="post">
 							<input type="hidden" name="id" value="<?=$_GET['id']?>">
 						</form>
 					<?php }	} ?>
 				</div>
-				<div class="theme-container">
-					<div class="toggle">
-						<div class="toggle-btn" onclick="darkmode()">
-						</div>
-					</div>
-				</div>
+			 	<?php require('libraries/dark-mode.php'); ?> <!-- 다크모드 -->
 			</div>
 		</div>
 		<div id="article">
@@ -214,7 +205,6 @@ if(isset($_GET['id'])){
 		</div>
 		<?php if (isset($_GET['id']) && $_GET['id'] != '0'){ ?>
 		<?php if (isset($_SESSION['id'])) { ?>
-		
 		<div class="comment" style="text-align:center;">
 			<form method="POST" id="comment_form">
 				<div class="form-group">
@@ -222,19 +212,19 @@ if(isset($_GET['id'])){
 				</div>
 				<div class="form-group">
 					<input type="hidden" name="comment_id" id="comment_id" value="0"/>
-					<input type="submit" name="submit" id="comment_submit_btn" class="btn btn-info" value="댓글" />
+					<input type="submit" name="submit" id="comment_submit_btn" class="btn btn-info" value="등록" />
 				</div>
 			</form>
-			<span id="comment_message"></span>
+			<!-- <span id="comment_message"></span> -->
    			<br />
 			<div id="display_comment"></div>
 			<?php } else { ?>
 			<div class="login-request-notice">
-				<p style="width: 60%; display: inline-block;" >
+				<p style="width: 60%; display: inline-block; color: black;" >
 					로그인 후 댓글 이용 가능합니다.
 				</p>
 				<br/>
-				<div class="text" id="text" onclick="location.href='login_view.php';" style="padding-top: 50px; font-weight: bold">로그인 페이지로 이동</div>
+				<div class="text" id="text" onclick="location.href='login_view.php';" style="padding-top: 50px; color: black; font-weight: bold">로그인 페이지로 이동</div>
 			</div>
 			<?php } } ?>
 		</div>	
@@ -303,7 +293,7 @@ if(isset($_GET['id'])){
 	</div>
 	<script src="//code.jquery.com/jquery-3.3.1.js"></script>
 	<!-- <script src="https://code.jquery.com/git/jquery-git.slim.js"></script> -->
-	<script src="theme-toggle/colors.js"></script>
+	<!-- <script src="scripts/dark-mode.js"></script> -->
 </body>
 </html>
 
@@ -334,7 +324,7 @@ $(document).ready(function(){
 		var cmt_id = thisClicked.closest('.reply-panel-container').find('.reply').attr("id");
 		var cmt_cnt = thisClicked.closest('.reply-panel-container').find("#comment_reply_content").val();
 		$.ajax({
-   			url:"add_comment.php",
+   			url:"/TestWeb/app/cmt/add_comment.php",
    			method:"POST",
 			data: {
 				'comment_id': cmt_id,
@@ -359,7 +349,7 @@ $(document).ready(function(){
   		var form_data = $(this).serialize();
 		// console.log(form_data);
   		$.ajax({
-   			url:"add_comment.php",
+   			url:"/TestWeb/app/cmt/add_comment.php",
    			method:"POST",
 			data:form_data,
 			dataType:"JSON",
@@ -381,7 +371,7 @@ $(document).ready(function(){
  	function load_comment()
  	{
 		$.ajax({
-			url:"fetch_comment.php",
+			url:"/TestWeb/app/cmt/fetch_comment.php",
 			method:"POST",
 			success:function(data)
 			{
