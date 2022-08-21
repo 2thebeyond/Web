@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<link rel="stylesheet" href="comment.css"/>
+		<link rel="stylesheet" href="styles/comment.css"/>
 	</head>
 </html>
 <?php
@@ -40,7 +40,7 @@ foreach($result as $row)
 	$nick_row = mysqli_fetch_array($result_);
 	$nick[$i] = htmlspecialchars($nick_row['user_nick']);
 	
-	if ($_SESSION['user_nick'] == $nick[$i]){
+	if ($_SESSION['user_nick'] == $nick[$i] && $row["isdelete"] == 0){
 		$output .= '
 		<div class="reply-panel-container">
 			<table class="panel panel-default">
@@ -51,7 +51,7 @@ foreach($result as $row)
 				<td class="panel-heading" align="right">
 					<div class="btn_container" style="float: right; width: 220px;">
 								<button type="button" class="btn btn-default reply"  id="'.$row["comment_id"].'">💬</button>
-								<button type="button" class="btn btn-default delete" onclick="location.href=\'delete_comment.php?cid='.$row["comment_id"].'&cnik='.$nick[$i].'\'">❌</button>
+								<button type="button" class="btn btn-default delete" onclick="location.href=\'app/cmt/delete_comment.php?cid='.$row["comment_id"].'&cnik='.$nick[$i].'\'">❌</button>
 					</div>
 				</td>
 			</tr>
@@ -66,7 +66,7 @@ foreach($result as $row)
 		</div>
  		';
  		$output .= get_reply_comment($connect, $row["comment_id"]);
-	} else {
+	} else if ($_SESSION['user_nick'] != $nick[$i] && $row["isdelete"] == 0){
 		$output .= '
 		<div class="reply-panel-container">
 			<table class="panel panel-default">
@@ -91,6 +91,37 @@ foreach($result as $row)
 	</div>
 	';
 	$output .= get_reply_comment($connect, $row["comment_id"]);
+	} else if ($row["isdelete"] == 1) {
+		$sql = "SELECT * FROM tbl_comment WHERE parent_comment_id = {$row["comment_id"]} AND isdelete = 0";
+		$result_ = mysqli_query($conn, $sql);
+		$child_row = mysqli_fetch_array($result_);
+		if (count($child_row) != 0) {
+			$output .= '
+			<div class="reply-panel-container">
+				<table class="panel panel-default">
+					<tr>
+						<td class="panel-heading">
+							<b>알수없음</b>
+						</td>
+						<td class="panel-heading" align="right">
+							<div class="btn_container" style="float: right; width: 110px;">
+								<button type="button" class="btn btn-default reply"  id="'.$row["comment_id"].'">💬</button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" class="panel-body">삭제된 댓글입니다.</td>
+					</tr>
+					<tr>
+						<td colspan="2" class="panel-footer">'.$formated_DATETIME.'</td>
+					</tr>
+				</table>
+				<div class="reply_section"></div>
+			</div>';
+			$output .= get_reply_comment($connect, $row["comment_id"]);
+		} else {
+			
+		}
 	}
 	$i++;
 }
@@ -100,16 +131,16 @@ echo $output;
 
 function get_reply_comment($connect, $parent_id = 0, $marginleft = 0)
 {
+	session_start();
 	$conn = mysqli_connect('localhost'
 					   ,'root'
 					   ,'test'
 					   ,'level1'
 	);
 	mysqli_set_charset($conn, "utf8");
-	
 	$query = "
- 	SELECT * FROM tbl_comment WHERE parent_comment_id = '".$parent_id."'
- ";
+	SELECT * FROM tbl_comment WHERE parent_comment_id = '".$parent_id."'
+	";
  	$output = '';
  	$statement = $connect->prepare($query);
  	$statement->execute();
@@ -132,7 +163,7 @@ function get_reply_comment($connect, $parent_id = 0, $marginleft = 0)
 			$nick = mysqli_fetch_array($result);
 			$nick[$i] = htmlspecialchars($nick['user_nick']);
 			
-			if ($_SESSION['user_nick'] == $nick[$i]){
+			if ($_SESSION['user_nick'] == $nick[$i] && $row["isdelete"] == 0){
 				$output .= '
 				<div class="reply-panel-container">
 					<table class="panel panel-default-reply" style="margin-left:'.$marginleft.'px;">
@@ -144,7 +175,7 @@ function get_reply_comment($connect, $parent_id = 0, $marginleft = 0)
 								<div class="btn_container" style="float: right; display: inline-block; width: 220px;">
 									<button type="button" class="btn btn-default reply"  id="'.$row["comment_id"].'">💬</button>
 
-									<button type="button" class="btn btn-default delete" onclick="location.href=\'delete_comment.php?cid='.$row["comment_id"].'&cnik='.$nick[$i].'\'">❌</button>
+									<button type="button" class="btn btn-default delete" onclick="location.href=\'app/cmt/delete_comment.php?cid='.$row["comment_id"].'&cnik='.$nick[$i].'\'">❌</button>
 								</div>
 							</td>
 						</tr>
@@ -161,7 +192,7 @@ function get_reply_comment($connect, $parent_id = 0, $marginleft = 0)
 				';
 				$output .= get_reply_comment($connect, $row["comment_id"], $marginleft);
 			
-			} else {
+			} else if ($_SESSION['user_nick'] != $nick[$i] && $row["isdelete"] == 0) {
 				$output .= '
 				<div class="reply-panel-container">
 					<table class="panel panel-default-reply" style="margin-left:'.$marginleft.'px;">
@@ -188,6 +219,9 @@ function get_reply_comment($connect, $parent_id = 0, $marginleft = 0)
 				</div>
 				';
 				$output .= get_reply_comment($connect, $row["comment_id"], $marginleft);
+			
+			} else if ($row["isdelete"] == 1) {
+			
 			
 			}
 			
