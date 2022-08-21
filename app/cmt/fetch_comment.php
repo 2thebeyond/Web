@@ -34,7 +34,11 @@ $output = '';
 $i = 0;
 foreach($result as $row)
 {
-	$formated_DATETIME = date('m-d H:i', strtotime($row["date"]));
+	if (date('Y') == date('Y', strtotime($row["date"]))){
+		$formated_DATETIME = date('m-d H:i', strtotime($row["date"]));
+	} else {
+			$formated_DATETIME = date('y-m-d H:i', strtotime($row["date"]));
+	}
 	$sql = "SELECT * FROM member WHERE member.id = {$row['comment_sender_name']}";
 	$result_ = mysqli_query($conn, $sql);
 	$nick_row = mysqli_fetch_array($result_);
@@ -157,7 +161,11 @@ function get_reply_comment($connect, $parent_id = 0, $marginleft = 0)
  	if($count > 0) {
 		$i = 0;
 		foreach($result as $row) {
-			$formated_DATETIME = date('m-d H:i', strtotime($row["date"]));
+			if (date('Y') == date('Y', strtotime($row["date"]))){
+				$formated_DATETIME = date('m-d H:i', strtotime($row["date"]));
+			} else {
+					$formated_DATETIME = date('y-m-d H:i', strtotime($row["date"]));
+			}
 			$sql = "SELECT * FROM member WHERE member.id = {$row['comment_sender_name']}";
 			$result = mysqli_query($conn, $sql);
 			$nick = mysqli_fetch_array($result);

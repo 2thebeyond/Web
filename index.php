@@ -177,7 +177,12 @@ if(isset($_GET['id'])){
 					<td style="padding-left:20px;"> 
 						<?php
 						if ($_GET['id'] != '0'){
-							echo $article['date'];
+							if (date('Y') == date('Y', strtotime($article["date"]))){
+								echo $formated_DATETIME = date('m-d H:i', strtotime($article["date"]));
+							} else {
+								echo $formated_DATETIME = date('y-m-d H:i', strtotime($article["date"]));
+							}
+							// echo $article['date'];
 						}
 						?>
 					</td>
@@ -224,7 +229,7 @@ if(isset($_GET['id'])){
 					로그인 후 댓글 이용 가능합니다.
 				</p>
 				<br/>
-				<div class="text" id="text" onclick="location.href='login_view.php';" style="padding-top: 50px; color: black; font-weight: bold">로그인 페이지로 이동</div>
+				<div class="text" id="text" onclick="location.href='views/account/login_view.php';" style="padding-top: 50px; color: black; font-weight: bold">로그인 페이지로 이동</div>
 			</div>
 			<?php } } ?>
 		</div>	
